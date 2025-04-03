@@ -1,0 +1,1 @@
+/*eslint-disable*/module.exports={messages:JSON.parse("{\"5Mh8FV\":[\"Biometric authentication failed.\"],\"kctQ62\":[\"Biometric canceled by the user.\"],\"KhSXDU\":[\"No encrypted password found\"],\"3FWjYJ\":[\"Unknown error. Please try again later.\"]}")};

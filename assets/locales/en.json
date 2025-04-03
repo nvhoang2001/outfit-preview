@@ -1,0 +1,58 @@
+{
+  "5Mh8FV": {
+    "message": "Biometric authentication failed.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "modules/Auth/LocalAuth/BiometricAuthentication.ts",
+        45
+      ],
+      [
+        "modules/Auth/LocalAuth/BiometricAuthentication.ts",
+        55
+      ]
+    ],
+    "translation": "Biometric authentication failed."
+  },
+  "kctQ62": {
+    "message": "Biometric canceled by the user.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "modules/Auth/LocalAuth/BiometricAuthentication.ts",
+        33
+      ]
+    ],
+    "translation": "Biometric canceled by the user."
+  },
+  "KhSXDU": {
+    "message": "No encrypted password found",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "modules/Auth/LocalAuth/PasswordAuthentication.ts",
+        56
+      ]
+    ],
+    "translation": "No encrypted password found"
+  },
+  "3FWjYJ": {
+    "message": "Unknown error. Please try again later.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "modules/Auth/LocalAuth/PasswordAuthentication.ts",
+        67
+      ],
+      [
+        "modules/Auth/LocalAuth/BiometricAuthentication.ts",
+        58
+      ]
+    ],
+    "translation": "Unknown error. Please try again later."
+  }
+}
