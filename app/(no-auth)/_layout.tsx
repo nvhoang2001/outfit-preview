@@ -3,9 +3,7 @@ import { View, Text } from "react-native";
 
 function NoAuthLayout() {
 	return (
-		<View className="flex w-full flex-grow flex-shrink basis-auto flex-col h-full justify-center items-center bg-white dark:bg-black">
-			<Text className="text-black dark:text-white">Hello</Text>
-
+		<View className="w-full h-full bg-white dark:bg-black">
 			<Stack
 				screenOptions={{
 					headerShown: false,

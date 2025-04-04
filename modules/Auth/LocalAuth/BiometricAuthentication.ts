@@ -5,7 +5,7 @@ import { t } from "@lingui/core/macro";
 class BiometricAuthentication extends PasswordAuthentication {
 	static async isBiometricAvailable(biometryType?: Keychain.BIOMETRY_TYPE) {
 		try {
-			const supportedBiometryTypes = await Keychain.getSupportedBiometryType();
+			const supportedBiometryTypes = await Keychain?.getSupportedBiometryType();
 
 			if (biometryType) {
 				return biometryType === supportedBiometryTypes;
