@@ -1,0 +1,210 @@
+{
+  "1Tt5cj": {
+    "translation": "Account info saved successfully.",
+    "message": "Account info saved successfully.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(no-auth)/onboard.tsx",
+        25
+      ]
+    ]
+  },
+  "5Mh8FV": {
+    "translation": "Biometric authentication failed.",
+    "message": "Biometric authentication failed.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
+        45
+      ],
+      [
+        "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
+        55
+      ]
+    ]
+  },
+  "kctQ62": {
+    "translation": "Biometric canceled by the user.",
+    "message": "Biometric canceled by the user.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
+        33
+      ]
+    ]
+  },
+  "SlfejT": {
+    "translation": "Error",
+    "message": "Error",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(no-auth)/onboard.tsx",
+        33
+      ]
+    ]
+  },
+  "GnlDn2": {
+    "translation": "Explore Now",
+    "message": "Explore Now",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Onboard/index.tsx",
+        108
+      ]
+    ]
+  },
+  "jSUUON": {
+    "translation": "Failed to save account info, please try again later.",
+    "message": "Failed to save account info, please try again later.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(no-auth)/onboard.tsx",
+        34
+      ]
+    ]
+  },
+  "KhSXDU": {
+    "translation": "No encrypted password found",
+    "message": "No encrypted password found",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
+        45
+      ]
+    ]
+  },
+  "8ZsakT": {
+    "translation": "Password",
+    "message": "Password",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Onboard/index.tsx",
+        88
+      ],
+      [
+        "src/modules/Auth/Login/index.tsx",
+        38
+      ]
+    ]
+  },
+  "k1fybU": {
+    "translation": "Password is required.",
+    "message": "Password is required.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Onboard/index.tsx",
+        50
+      ]
+    ]
+  },
+  "Kv2KMJ": {
+    "translation": "Password must be at least 8 characters long.",
+    "message": "Password must be at least 8 characters long.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Onboard/index.tsx",
+        55
+      ]
+    ]
+  },
+  "zzDlyQ": {
+    "translation": "Success",
+    "message": "Success",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(no-auth)/onboard.tsx",
+        24
+      ]
+    ]
+  },
+  "3FWjYJ": {
+    "translation": "Unknown error. Please try again later.",
+    "message": "Unknown error. Please try again later.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
+        54
+      ],
+      [
+        "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
+        58
+      ]
+    ]
+  },
+  "7sNhEz": {
+    "translation": "Username",
+    "message": "Username",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Onboard/index.tsx",
+        75
+      ]
+    ]
+  },
+  "6BPTjM": {
+    "translation": "Username is required.",
+    "message": "Username is required.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Onboard/index.tsx",
+        36
+      ]
+    ]
+  },
+  "3rea5t": {
+    "translation": "Username must be at least 3 characters long.",
+    "message": "Username must be at least 3 characters long.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Onboard/index.tsx",
+        41
+      ]
+    ]
+  },
+  "2/SNNH": {
+    "translation": "Welcome back, {username}",
+    "message": "Welcome back, {username}",
+    "placeholders": {
+      "username": [
+        "username"
+      ]
+    },
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Login/index.tsx",
+        32
+      ]
+    ]
+  }
+}
