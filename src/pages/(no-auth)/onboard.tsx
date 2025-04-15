@@ -1,5 +1,4 @@
 import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { t } from '@lingui/core/macro';
 import Icon from '@/components/Icons';
 import useAuthStore from '@/store/auth.slice';
 import Toast from 'react-native-toast-message';
@@ -7,10 +6,13 @@ import { NRouter } from '@/@types/router';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import OnboardForm from '@/modules/Auth/Onboard';
 import PasswordAuthentication from '@/modules/Auth/LocalAuth/PasswordAuthentication';
+import { useLingui } from '@lingui/react';
+import { msg } from '@lingui/core/macro';
 
 type TProps = NativeStackScreenProps<NRouter.TRootStackParamList, 'onboard'>;
 
 const OnboardPage: React.FC<TProps> = ({ navigation }) => {
+  const { _: t } = useLingui();
   const storeUser = useAuthStore(state => state.setUser);
 
   async function saveAccountInfo(username: string, password: string) {
@@ -21,8 +23,8 @@ const OnboardPage: React.FC<TProps> = ({ navigation }) => {
       await auth.saveCredentials(username, password);
       Toast.show({
         type: 'success',
-        text1: t`Success`,
-        text2: t`Account info saved successfully.`,
+        text1: t(msg`Success`),
+        text2: t(msg`Account info saved successfully.`),
       });
       navigation.navigate('homepage');
     } catch (error) {
@@ -30,8 +32,8 @@ const OnboardPage: React.FC<TProps> = ({ navigation }) => {
 
       Toast.show({
         type: 'error',
-        text1: t`Error`,
-        text2: t`Failed to save account info, please try again later.`,
+        text1: t(msg`Error`),
+        text2: t(msg`Failed to save account info, please try again later.`),
       });
     }
   }

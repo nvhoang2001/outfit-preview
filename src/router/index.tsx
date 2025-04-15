@@ -1,5 +1,5 @@
 import { NRouter } from '@/@types/router';
-import StartScreen from '@/pages';
+import StartScreen from '@/pages/index';
 import AuthLayout from '@/pages/(auth)/_layout';
 import Homepage from '@/pages/(auth)/homepage';
 import NoAuthLayout from '@/pages/(no-auth)/_layout';

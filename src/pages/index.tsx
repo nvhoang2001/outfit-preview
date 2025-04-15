@@ -4,7 +4,7 @@ import BiometricAuthentication from '@/modules/Auth/LocalAuth/BiometricAuthentic
 import useAuthStore from '@/store/auth.slice';
 import useSettingStore from '@/store/setting.slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Animated,
   Easing,
@@ -22,13 +22,17 @@ import { NRouter } from '@/@types/router';
 type TProps = NativeStackScreenProps<NRouter.TRootStackParamList, 'index'>;
 
 const StartScreen: React.FC<TProps> = ({ navigation }) => {
+  const scaleAnimateValue = useAnimatedValue(0);
+
+  const [isLoadedData, setIsLoadedData] = useState(false);
+
   const isLoggedIn = useAuthStore(state => state.isSignedIn);
   const userData = useAuthStore(state => state.user);
-  const updateBiometricAvailability = useAuthStore(state => state.setCanUseBiometric);
+  const currentLocale = useSettingStore(state => state.localeLang);
+
   const updateUser = useAuthStore(state => state.setUser);
   const updateActiveLocaleLang = useSettingStore(state => state.setActiveLocaleLang);
-  const currentLocale = useSettingStore(state => state.localeLang);
-  const scaleAnimateValue = useAnimatedValue(0);
+  const updateBiometricAvailability = useAuthStore(state => state.setCanUseBiometric);
 
   const isOnboarded = Boolean(userData);
 
@@ -92,6 +96,14 @@ const StartScreen: React.FC<TProps> = ({ navigation }) => {
     try {
       await Promise.all(task);
 
+      setIsLoadedData(true);
+    } catch (error) {
+      console.log('Error: ', error);
+    }
+  }
+
+  useEffect(() => {
+    if (isLoadedData) {
       if (isLoggedIn) {
         navigation.replace('homepage');
       } else {
@@ -101,14 +113,13 @@ const StartScreen: React.FC<TProps> = ({ navigation }) => {
           navigation.replace('onboard');
         }
       }
-    } catch (error) {
-      console.log('Error: ', error);
     }
-  }
+  }, [isLoadedData]);
 
   useEffect(() => {
     initAppData();
     onboardingAnimation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

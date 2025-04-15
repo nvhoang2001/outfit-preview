@@ -17,10 +17,6 @@ export default {
     },
   },
   presets: [require('nativewind/preset')],
-  content: [
-    './app/**/*.{js,jsx,ts,tsx}',
-    './components/**/*.{js,jsx,ts,tsx}',
-    './modules/**/*.{js,jsx,ts,tsx}',
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './App.{tsx,jsx,ts,js}'],
   plugins: [],
 };

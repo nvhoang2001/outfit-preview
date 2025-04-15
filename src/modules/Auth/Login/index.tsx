@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/react/macro';
-import { t } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react';
+import { msg } from '@lingui/core/macro';
 import { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from '@/components/Icons';
@@ -20,6 +21,8 @@ const styles = StyleSheet.create({
 function LoginForm({ username, onSubmit, onSignInWithBiometric }: IProps) {
   const canUseBiometric = useAuthStore(state => state.canUseBiometric);
 
+  const { _: t } = useLingui();
+
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -35,7 +38,7 @@ function LoginForm({ username, onSubmit, onSignInWithBiometric }: IProps) {
 
   function signInWithPassword() {
     if (!password) {
-      setPasswordError(t`Password is required`);
+      setPasswordError(t(msg`Password is required`));
       return;
     }
 
@@ -54,7 +57,7 @@ function LoginForm({ username, onSubmit, onSignInWithBiometric }: IProps) {
         <View className="relative flex-1">
           <TextInput
             className="border border-gray-800 text-black dark:border-gray-50 dark:text-white py-3 pl-4 pr-14 rounded-md"
-            placeholder={t`Password`}
+            placeholder={t(msg`Password`)}
             placeholderTextColor="#777"
             style={passwordError ? styles.inputError : {}}
             value={password}

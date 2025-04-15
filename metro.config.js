@@ -13,7 +13,7 @@ const { assetExts, sourceExts } = defaultConfig.resolver;
 const svgConfig = withSvgTransformer();
 
 module.exports = withNativeWind(mergeConfig(defaultConfig, svgConfig), {
-  input: './styles/global.css',
+  input: './src/styles/global.css',
 });
 
 function withSvgTransformer() {

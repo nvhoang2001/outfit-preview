@@ -1,6 +1,7 @@
 import * as Keychain from 'react-native-keychain';
 import { PasswordAuthentication } from './PasswordAuthentication';
-import { t } from '@lingui/core/macro';
+import { msg } from '@lingui/core/macro';
+import { i18n } from '@lingui/core';
 
 class BiometricAuthentication extends PasswordAuthentication {
   static async isBiometricAvailable(biometryType?: Keychain.BIOMETRY_TYPE) {
@@ -30,7 +31,7 @@ class BiometricAuthentication extends PasswordAuthentication {
       const typedError = error as Error;
 
       if (typedError.name === 'BiometryEnrollmentCancel') {
-        throw new Error(t`Biometric canceled by the user.`);
+        throw new Error(i18n._(msg`Biometric canceled by the user.`));
       }
     }
   }
@@ -42,7 +43,7 @@ class BiometricAuthentication extends PasswordAuthentication {
       });
 
       if (!credentials) {
-        throw new Error(t`Biometric authentication failed.`);
+        throw new Error(i18n._(msg`Biometric authentication failed.`));
       }
 
       const { password } = credentials;
@@ -52,10 +53,10 @@ class BiometricAuthentication extends PasswordAuthentication {
       const typedError = error as Error;
 
       if (typedError.message.includes('authentication failed')) {
-        throw new Error(t`Biometric authentication failed.`);
+        throw new Error(i18n._(msg`Biometric authentication failed.`));
       }
 
-      throw new Error(t`Unknown error. Please try again later.`);
+      throw new Error(i18n._(msg`Unknown error. Please try again later.`));
     }
   }
 }

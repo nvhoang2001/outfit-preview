@@ -5,22 +5,24 @@
  * @format
  */
 
-import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import AppRouter from '@/router';
-import I18nProvider from '@/modules/Localization/I18nProvider';
-
-import '@/styles/global.css';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-function App(): React.JSX.Element {
+import AppRouter from './src/router';
+import I18nProvider from './src/modules/Localization/I18nProvider';
+import SafeView from './src/components/SafeView';
+
+import './src/styles/global.css';
+
+function App() {
   return (
     <I18nProvider>
-      <SafeAreaView className="h-full">
-        <AppRouter />
-        <Toast />
-      </SafeAreaView>
+      <SafeAreaProvider>
+        <SafeView style={{ height: '100%' }}>
+          <AppRouter />
+          <Toast />
+        </SafeView>
+      </SafeAreaProvider>
     </I18nProvider>
   );
 }

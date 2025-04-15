@@ -2,14 +2,18 @@ import { I18nProvider as LinguiI18nProvider } from '@lingui/react';
 import { i18n } from '@lingui/core';
 import { useEffect } from 'react';
 import useSettingStore from '@/store/setting.slice';
+import { messages as enTrans } from '@/assets/locales/en';
+import { messages as viTrans } from '@/assets/locales/vi';
+import { defaultLocale } from '@/constants/locales';
 
 interface I18nProviderProps {
   children: React.ReactNode;
 }
 
-i18n.load('en', require('@/assets/locales/en.js'));
-
-i18n.activate('en');
+i18n.loadAndActivate({
+  locale: defaultLocale,
+  messages: enTrans,
+});
 
 function I18nProvider({ children }: I18nProviderProps) {
   const locale = useSettingStore(state => state.localeLang);
@@ -20,13 +24,12 @@ function I18nProvider({ children }: I18nProviderProps) {
     if (locale !== i18n.locale) {
       const localesTrans = new Map<string, any>();
 
-      localesTrans.set('en', require('@/assets/locales/en.js'));
-      localesTrans.set('vi', require('@/assets/locales/vi.js'));
+      localesTrans.set('en', enTrans);
+      localesTrans.set('vi', viTrans);
 
       try {
         const message = localesTrans.get(localeCode);
-        i18n.load(localeCode, message.messages);
-        i18n.activate(localeCode);
+        i18n.loadAndActivate({ locale: localeCode, messages: message });
       } catch (error) {}
     }
   }, []);

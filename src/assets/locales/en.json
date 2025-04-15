@@ -1,198 +1,233 @@
 {
   "1Tt5cj": {
-    "translation": "Account info saved successfully.",
     "message": "Account info saved successfully.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/pages/(no-auth)/onboard.tsx",
-        25
+        27
       ]
-    ]
+    ],
+    "translation": "Account info saved successfully."
   },
   "5Mh8FV": {
-    "translation": "Biometric authentication failed.",
     "message": "Biometric authentication failed.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
-        45
+        46
       ],
       [
         "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
-        55
+        56
       ]
-    ]
+    ],
+    "translation": "Biometric authentication failed."
   },
   "kctQ62": {
-    "translation": "Biometric canceled by the user.",
     "message": "Biometric canceled by the user.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
-        33
+        34
       ]
-    ]
+    ],
+    "translation": "Biometric canceled by the user."
   },
   "SlfejT": {
-    "translation": "Error",
     "message": "Error",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/pages/(no-auth)/onboard.tsx",
-        33
+        35
       ]
-    ]
+    ],
+    "translation": "Error"
   },
   "GnlDn2": {
-    "translation": "Explore Now",
     "message": "Explore Now",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Onboard/index.tsx",
-        108
+        111
       ]
-    ]
+    ],
+    "translation": "Explore Now"
   },
   "jSUUON": {
-    "translation": "Failed to save account info, please try again later.",
     "message": "Failed to save account info, please try again later.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/pages/(no-auth)/onboard.tsx",
-        34
+        36
+      ]
+    ],
+    "translation": "Failed to save account info, please try again later."
+  },
+  "z0t9bb": {
+    "translation": "Login",
+    "message": "Login",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Login/index.tsx",
+        87
+      ]
+    ]
+  },
+  "am/2v5": {
+    "translation": "message test",
+    "message": "message test",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Onboard/index.tsx",
+        72
       ]
     ]
   },
   "KhSXDU": {
-    "translation": "No encrypted password found",
     "message": "No encrypted password found",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
-        45
+        46
       ]
-    ]
+    ],
+    "translation": "No encrypted password found"
   },
   "8ZsakT": {
-    "translation": "Password",
     "message": "Password",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Onboard/index.tsx",
-        88
+        91
       ],
       [
         "src/modules/Auth/Login/index.tsx",
-        38
+        60
+      ]
+    ],
+    "translation": "Password"
+  },
+  "chRwq/": {
+    "translation": "Password is required",
+    "message": "Password is required",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Login/index.tsx",
+        41
       ]
     ]
   },
   "k1fybU": {
-    "translation": "Password is required.",
     "message": "Password is required.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Onboard/index.tsx",
-        50
+        53
       ]
-    ]
+    ],
+    "translation": "Password is required."
   },
   "Kv2KMJ": {
-    "translation": "Password must be at least 8 characters long.",
     "message": "Password must be at least 8 characters long.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Onboard/index.tsx",
-        55
+        58
       ]
-    ]
+    ],
+    "translation": "Password must be at least 8 characters long."
   },
   "zzDlyQ": {
-    "translation": "Success",
     "message": "Success",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/pages/(no-auth)/onboard.tsx",
-        24
+        26
       ]
-    ]
+    ],
+    "translation": "Success"
   },
   "3FWjYJ": {
-    "translation": "Unknown error. Please try again later.",
     "message": "Unknown error. Please try again later.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
-        54
+        55
       ],
       [
         "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
-        58
+        59
       ]
-    ]
+    ],
+    "translation": "Unknown error. Please try again later."
   },
   "7sNhEz": {
-    "translation": "Username",
     "message": "Username",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Onboard/index.tsx",
-        75
+        78
       ]
-    ]
+    ],
+    "translation": "Username"
   },
   "6BPTjM": {
-    "translation": "Username is required.",
     "message": "Username is required.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Onboard/index.tsx",
-        36
+        39
       ]
-    ]
+    ],
+    "translation": "Username is required."
   },
   "3rea5t": {
-    "translation": "Username must be at least 3 characters long.",
     "message": "Username must be at least 3 characters long.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Onboard/index.tsx",
-        41
+        44
       ]
-    ]
+    ],
+    "translation": "Username must be at least 3 characters long."
   },
   "2/SNNH": {
-    "translation": "Welcome back, {username}",
     "message": "Welcome back, {username}",
     "placeholders": {
       "username": [
@@ -203,8 +238,9 @@
     "origin": [
       [
         "src/modules/Auth/Login/index.tsx",
-        32
+        52
       ]
-    ]
+    ],
+    "translation": "Welcome back, {username}"
   }
 }

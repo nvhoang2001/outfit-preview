@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type TProps = NativeStackScreenProps<NRouter.TRootStackParamList, 'login'>;
 
-const LoginPage: React.FC<TProps> = ({ navigation }) => {
+const LoginPage: React.FC<TProps> = () => {
   return (
     <View>
       <Text>Login</Text>

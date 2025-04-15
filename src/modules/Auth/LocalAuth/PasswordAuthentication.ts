@@ -1,7 +1,8 @@
 import { EConfigKeys } from '@/constants/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Aes from 'react-native-aes-crypto';
-import { t } from '@lingui/core/macro';
+import { msg } from '@lingui/core/macro';
+import { i18n } from '@lingui/core';
 
 export class PasswordAuthentication {
   private encryptionIV = 'b0b788dfbb144d9022c75374e6d9a92a';
@@ -42,7 +43,7 @@ export class PasswordAuthentication {
       const encryptedPassword = await this.getEncryptedPassword();
 
       if (!encryptedPassword) {
-        throw new Error(t`No encrypted password found`);
+        throw new Error(i18n._(msg`No encrypted password found`));
       }
 
       const encryptKey = await this.hashPassword(password);
@@ -51,7 +52,7 @@ export class PasswordAuthentication {
 
       return true;
     } catch (error) {
-      throw new Error(t`Unknown error. Please try again later.`);
+      throw new Error(i18n._(msg`Unknown error. Please try again later.`));
     }
   }
 }
