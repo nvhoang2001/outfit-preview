@@ -7,9 +7,9 @@ import Icon from '@/components/Icons';
 import useAuthStore from '@/store/auth.slice';
 
 interface IProps {
-  username: string;
   onSubmit: (password: string) => void;
   onSignInWithBiometric: () => void;
+  onResetPassword: () => void;
 }
 
 const styles = StyleSheet.create({
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function LoginForm({ username, onSubmit, onSignInWithBiometric }: IProps) {
+function LoginForm({ onSubmit, onSignInWithBiometric, onResetPassword }: IProps) {
   const canUseBiometric = useAuthStore(state => state.canUseBiometric);
 
   const { _: t } = useLingui();
@@ -45,14 +45,12 @@ function LoginForm({ username, onSubmit, onSignInWithBiometric }: IProps) {
     onSubmit(password);
   }
 
-  return (
-    <View>
-      <View>
-        <Text>
-          <Trans>Welcome back, {username}</Trans>
-        </Text>
-      </View>
+  function requestResetAccount() {
+    onResetPassword();
+  }
 
+  return (
+    <View className="flex flex-col gap-y-5">
       <View className="flex flex-row gap-x-5">
         <View className="relative flex-1">
           <TextInput
@@ -83,8 +81,21 @@ function LoginForm({ username, onSubmit, onSignInWithBiometric }: IProps) {
         )}
       </View>
 
-      <TouchableOpacity className="bg-cyan-400 py-3 rounded-md mt-6" onPress={signInWithPassword}>
-        <Trans>Login</Trans>
+      <View className="flex flex-row gap-2">
+        <Text>
+          <Trans>Forgot password? </Trans>
+        </Text>
+        <TouchableOpacity onPress={requestResetAccount}>
+          <Text className="text-cyan-400">
+            <Trans>Reset account</Trans>
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity className="bg-cyan-400 py-3 rounded-md mt-28" onPress={signInWithPassword}>
+        <Text className="text-center text-black font-semibold">
+          <Trans>Let's go</Trans>
+        </Text>
       </TouchableOpacity>
     </View>
   );

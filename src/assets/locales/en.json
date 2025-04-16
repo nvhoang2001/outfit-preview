@@ -1,4 +1,16 @@
 {
+  "DF+LqH": {
+    "translation": ":ogin failed",
+    "message": ":ogin failed",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(no-auth)/login.tsx",
+        36
+      ]
+    ]
+  },
   "1Tt5cj": {
     "message": "Account info saved successfully.",
     "placeholders": {},
@@ -75,32 +87,56 @@
     ],
     "translation": "Failed to save account info, please try again later."
   },
-  "z0t9bb": {
-    "translation": "Login",
-    "message": "Login",
+  "tbiS5I": {
+    "translation": "Forgot password? ",
+    "message": "Forgot password? ",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Login/index.tsx",
-        87
+        86
       ]
     ]
   },
-  "am/2v5": {
-    "translation": "message test",
-    "message": "message test",
+  "Q54Y6h": {
+    "message": "Invalid password. Please try another one.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
-        "src/modules/Auth/Onboard/index.tsx",
-        72
+        "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
+        60
+      ]
+    ],
+    "translation": "Invalid password. Please try another one."
+  },
+  "O1h2Xs": {
+    "message": "Let's go",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Login/index.tsx",
+        97
+      ]
+    ],
+    "translation": "Let's go"
+  },
+  "T4zr9t": {
+    "translation": "Login to your account",
+    "message": "Login to your account",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(no-auth)/login.tsx",
+        60
       ]
     ]
   },
-  "KhSXDU": {
-    "message": "No encrypted password found",
+  "897dKm": {
+    "message": "No password found",
     "placeholders": {},
     "comments": [],
     "origin": [
@@ -109,7 +145,7 @@
         46
       ]
     ],
-    "translation": "No encrypted password found"
+    "translation": "No password found"
   },
   "8ZsakT": {
     "message": "Password",
@@ -122,13 +158,12 @@
       ],
       [
         "src/modules/Auth/Login/index.tsx",
-        60
+        58
       ]
     ],
     "translation": "Password"
   },
   "chRwq/": {
-    "translation": "Password is required",
     "message": "Password is required",
     "placeholders": {},
     "comments": [],
@@ -137,7 +172,8 @@
         "src/modules/Auth/Login/index.tsx",
         41
       ]
-    ]
+    ],
+    "translation": "Password is required"
   },
   "k1fybU": {
     "message": "Password is required.",
@@ -163,6 +199,18 @@
     ],
     "translation": "Password must be at least 8 characters long."
   },
+  "sIf8gX": {
+    "translation": "Reset account",
+    "message": "Reset account",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Login/index.tsx",
+        90
+      ]
+    ]
+  },
   "zzDlyQ": {
     "message": "Success",
     "placeholders": {},
@@ -171,19 +219,43 @@
       [
         "src/pages/(no-auth)/onboard.tsx",
         26
+      ],
+      [
+        "src/pages/(no-auth)/login.tsx",
+        26
       ]
     ],
     "translation": "Success"
+  },
+  "djCgAy": {
+    "message": "Unknown error occured. Please try again",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(no-auth)/login.tsx",
+        32
+      ]
+    ],
+    "translation": "Unknown error occured. Please try again"
+  },
+  "+mAAak": {
+    "translation": "Unknown error occurred. Please try again later.",
+    "message": "Unknown error occurred. Please try again later.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
+        63
+      ]
+    ]
   },
   "3FWjYJ": {
     "message": "Unknown error. Please try again later.",
     "placeholders": {},
     "comments": [],
     "origin": [
-      [
-        "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
-        55
-      ],
       [
         "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
         59
@@ -237,8 +309,12 @@
     "comments": [],
     "origin": [
       [
-        "src/modules/Auth/Login/index.tsx",
-        52
+        "src/pages/(no-auth)/login.tsx",
+        27
+      ],
+      [
+        "src/pages/(no-auth)/login.tsx",
+        57
       ]
     ],
     "translation": "Welcome back, {username}"

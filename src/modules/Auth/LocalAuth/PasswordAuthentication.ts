@@ -43,16 +43,24 @@ export class PasswordAuthentication {
       const encryptedPassword = await this.getEncryptedPassword();
 
       if (!encryptedPassword) {
-        throw new Error(i18n._(msg`No encrypted password found`));
+        throw new Error(i18n._(msg`No password found`));
       }
 
       const encryptKey = await this.hashPassword(password);
       const algorithm = this.encryptionAlgorithm;
+
       await Aes.decrypt(encryptedPassword, encryptKey, iv, algorithm);
 
       return true;
     } catch (error) {
-      throw new Error(i18n._(msg`Unknown error. Please try again later.`));
+      const typedError = error as Error & { code?: string };
+      const isInvalidPassword = typedError.code === '-1';
+
+      if (isInvalidPassword) {
+        throw new Error(i18n._(msg`Invalid password. Please try another one.`));
+      }
+
+      throw new Error(i18n._(msg`Unknown error occurred. Please try again later.`));
     }
   }
 }
