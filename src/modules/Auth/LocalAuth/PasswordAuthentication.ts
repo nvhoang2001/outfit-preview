@@ -37,7 +37,15 @@ export class PasswordAuthentication {
     ]);
   }
 
-  async signIn(password: string) {
+  async clearCredentials() {
+    await AsyncStorage.multiRemove([EConfigKeys.ENCRYPTED_PASSWORD, EConfigKeys.USERNAME]);
+  }
+
+  async signIn(password?: string) {
+    if (!password) {
+      throw new Error(i18n._(msg`Password is required to sign in.`));
+    }
+
     try {
       const iv = this.encryptionIV;
       const encryptedPassword = await this.getEncryptedPassword();

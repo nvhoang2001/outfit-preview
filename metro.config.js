@@ -10,9 +10,17 @@ const { assetExts, sourceExts } = defaultConfig.resolver;
  *
  * @type {import('@react-native/metro-config').MetroConfig}
  */
+const extendConfig = {
+  resolver: {
+    /* Fix dual-package error from lingui and react native
+        https://github.com/lingui/js-lingui/issues/2231
+    */
+    unstable_enablePackageExports: false,
+  },
+};
 const svgConfig = withSvgTransformer();
 
-module.exports = withNativeWind(mergeConfig(defaultConfig, svgConfig), {
+module.exports = withNativeWind(mergeConfig(defaultConfig, svgConfig, extendConfig), {
   input: './src/styles/global.css',
 });
 

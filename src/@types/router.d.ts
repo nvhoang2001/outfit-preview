@@ -4,5 +4,6 @@ export namespace NRouter {
     homepage: undefined;
     login: undefined;
     onboard: undefined;
+    'outfit-preview': undefined;
   };
 }

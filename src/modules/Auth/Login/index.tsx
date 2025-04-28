@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from '@/components/Icons';
 import useAuthStore from '@/store/auth.slice';
+import ResetAccountModal from './ResetAccountModal';
+import useModal from '@/hooks/useModal';
 
 interface IProps {
   onSubmit: (password: string) => void;
@@ -20,6 +22,7 @@ const styles = StyleSheet.create({
 
 function LoginForm({ onSubmit, onSignInWithBiometric, onResetPassword }: IProps) {
   const canUseBiometric = useAuthStore(state => state.canUseBiometric);
+  const resetAccountModal = useModal();
 
   const { _: t } = useLingui();
 
@@ -46,11 +49,22 @@ function LoginForm({ onSubmit, onSignInWithBiometric, onResetPassword }: IProps)
   }
 
   function requestResetAccount() {
+    resetAccountModal.openModal();
+  }
+
+  function confirmResetAccount() {
     onResetPassword();
+    resetAccountModal.closeModal();
   }
 
   return (
     <View className="flex flex-col gap-y-5">
+      <ResetAccountModal
+        visible={resetAccountModal.isOpen}
+        onClose={resetAccountModal.closeModal}
+        onConfirm={confirmResetAccount}
+      />
+
       <View className="flex flex-row gap-x-5">
         <View className="relative flex-1">
           <TextInput

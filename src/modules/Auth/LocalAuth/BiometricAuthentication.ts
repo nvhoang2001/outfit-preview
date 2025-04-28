@@ -19,6 +19,10 @@ class BiometricAuthentication extends PasswordAuthentication {
     }
   }
 
+  static async hasStoredCredentials() {
+    return await Keychain.hasGenericPassword();
+  }
+
   async saveCredentials(username: string, password: string) {
     try {
       await super.saveCredentials(username, password);
@@ -36,8 +40,17 @@ class BiometricAuthentication extends PasswordAuthentication {
     }
   }
 
-  async signIn() {
+  async clearCredentials(): Promise<void> {
+    await Keychain.resetGenericPassword();
+    await super.clearCredentials();
+  }
+
+  async signIn(password?: string) {
     try {
+      if (password) {
+        return super.signIn(password);
+      }
+
       const credentials = await Keychain.getGenericPassword({
         accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
       });
@@ -46,9 +59,9 @@ class BiometricAuthentication extends PasswordAuthentication {
         throw new Error(i18n._(msg`Biometric authentication failed.`));
       }
 
-      const { password } = credentials;
+      const { password: storedPassword } = credentials;
 
-      return super.signIn(password);
+      return super.signIn(storedPassword);
     } catch (error) {
       const typedError = error as Error;
 

@@ -9,23 +9,26 @@ import Toast from 'react-native-toast-message';
 import { useLingui } from '@lingui/react';
 import { msg } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
+import { useEffect, useState } from 'react';
+import BiometricAuthentication from '@/modules/Auth/LocalAuth/BiometricAuthentication';
 
 type TProps = NativeStackScreenProps<NRouter.TRootStackParamList, 'login'>;
 
 const LoginPage: React.FC<TProps> = ({ navigation }) => {
   const username = useAuthStore(state => state.user!.username);
   const { _: t } = useLingui();
-  async function signInWithPassword(password: string) {
-    const auth = new PasswordAuthentication();
+  const [authInstance, setAuthInstance] = useState<PasswordAuthentication | undefined>();
 
+  async function signInWithPassword(password: string) {
     try {
-      await auth.signIn(password);
+      await authInstance!.signIn(password);
 
       Toast.show({
         type: 'success',
         text1: t(msg`Success`),
         text2: t(msg`Welcome back, ${{ username }}`),
       });
+
       navigation.replace('homepage');
     } catch (error) {
       const typedError = error as Error;
@@ -41,7 +44,22 @@ const LoginPage: React.FC<TProps> = ({ navigation }) => {
 
   function signInWithBiometric() {}
 
-  function clearUserAccountInfo() {}
+  function clearUserAccountInfo() {
+    authInstance!.clearCredentials();
+    navigation.replace('onboard');
+  }
+
+  useEffect(() => {
+    async function initAuthInstance() {
+      const hasStoredBiometricData = await BiometricAuthentication.hasStoredCredentials();
+
+      setAuthInstance(
+        hasStoredBiometricData ? new BiometricAuthentication() : new PasswordAuthentication()
+      );
+    }
+
+    initAuthInstance();
+  }, []);
 
   return (
     <View className="h-full bg-white dark:bg-slate-900">

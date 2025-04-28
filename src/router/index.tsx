@@ -7,6 +7,7 @@ import LoginPage from '@/pages/(no-auth)/login';
 import OnboardPage from '@/pages/(no-auth)/onboard';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import OutfitPreview from '@/pages/(auth)/outfit-preview';
 
 const Stack = createNativeStackNavigator<NRouter.TRootStackParamList>();
 
@@ -17,6 +18,7 @@ function AppRouter() {
         <Stack.Screen name="index" component={StartScreen} />
         <Stack.Group screenLayout={AuthLayout}>
           <Stack.Screen name="homepage" component={Homepage} />
+          <Stack.Screen name="outfit-preview" component={OutfitPreview} />
         </Stack.Group>
         <Stack.Group screenLayout={NoAuthLayout}>
           <Stack.Screen name="login" component={LoginPage} />
