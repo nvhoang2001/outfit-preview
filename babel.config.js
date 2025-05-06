@@ -13,5 +13,6 @@ module.exports = {
       },
     ],
     '@lingui/babel-plugin-lingui-macro',
+    'transform-inline-environment-variables',
   ],
 };

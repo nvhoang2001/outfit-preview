@@ -1,13 +1,37 @@
 {
-  "DF+LqH": {
-    "translation": ":ogin failed",
-    "message": ":ogin failed",
+  "Sdt5QF": {
+    "translation": " No, let me try again ",
+    "message": " No, let me try again ",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
-        "src/pages/(no-auth)/login.tsx",
-        36
+        "src/modules/Auth/Login/ResetAccountModal/index.tsx",
+        32
+      ]
+    ]
+  },
+  "vxzopl": {
+    "translation": " Reset account? ",
+    "message": " Reset account? ",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Login/ResetAccountModal/index.tsx",
+        17
+      ]
+    ]
+  },
+  "9Z2uvm": {
+    "translation": " Yes, reset my account ",
+    "message": " Yes, reset my account ",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Login/ResetAccountModal/index.tsx",
+        39
       ]
     ]
   },
@@ -29,12 +53,16 @@
     "comments": [],
     "origin": [
       [
-        "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
-        46
+        "src/modules/Vault/AIModelKeyVault/index.ts",
+        21
       ],
       [
         "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
-        56
+        59
+      ],
+      [
+        "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
+        69
       ]
     ],
     "translation": "Biometric authentication failed."
@@ -46,10 +74,22 @@
     "origin": [
       [
         "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
-        34
+        38
       ]
     ],
     "translation": "Biometric canceled by the user."
+  },
+  "rT2cV+": {
+    "translation": "Camera",
+    "message": "Camera",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(auth)/homepage.tsx",
+        41
+      ]
+    ]
   },
   "SlfejT": {
     "message": "Error",
@@ -75,6 +115,18 @@
     ],
     "translation": "Explore Now"
   },
+  "LgEa00": {
+    "translation": "Failed to launch image picker",
+    "message": "Failed to launch image picker",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/OutfitPreview/ImagePicker/index.tsx",
+        28
+      ]
+    ]
+  },
   "jSUUON": {
     "message": "Failed to save account info, please try again later.",
     "placeholders": {},
@@ -88,14 +140,26 @@
     "translation": "Failed to save account info, please try again later."
   },
   "tbiS5I": {
-    "translation": "Forgot password? ",
     "message": "Forgot password? ",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Login/index.tsx",
-        86
+        100
+      ]
+    ],
+    "translation": "Forgot password? "
+  },
+  "UQ4o1/": {
+    "translation": "Generate image",
+    "message": "Generate image",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/OutfitPreview/index.tsx",
+        65
       ]
     ]
   },
@@ -106,7 +170,7 @@
     "origin": [
       [
         "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
-        60
+        68
       ]
     ],
     "translation": "Invalid password. Please try another one."
@@ -118,22 +182,34 @@
     "origin": [
       [
         "src/modules/Auth/Login/index.tsx",
-        97
+        111
       ]
     ],
     "translation": "Let's go"
   },
+  "4GKuCs": {
+    "translation": "Login failed",
+    "message": "Login failed",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(no-auth)/login.tsx",
+        38
+      ]
+    ]
+  },
   "T4zr9t": {
-    "translation": "Login to your account",
     "message": "Login to your account",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/pages/(no-auth)/login.tsx",
-        60
+        77
       ]
-    ]
+    ],
+    "translation": "Login to your account"
   },
   "897dKm": {
     "message": "No password found",
@@ -142,10 +218,22 @@
     "origin": [
       [
         "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
-        46
+        54
       ]
     ],
     "translation": "No password found"
+  },
+  "owXMlO": {
+    "translation": "No selected items, pick one to proceed",
+    "message": "No selected items, pick one to proceed",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/OutfitPreview/index.tsx",
+        53
+      ]
+    ]
   },
   "8ZsakT": {
     "message": "Password",
@@ -158,7 +246,7 @@
       ],
       [
         "src/modules/Auth/Login/index.tsx",
-        58
+        72
       ]
     ],
     "translation": "Password"
@@ -170,10 +258,22 @@
     "origin": [
       [
         "src/modules/Auth/Login/index.tsx",
-        41
+        44
       ]
     ],
     "translation": "Password is required"
+  },
+  "ZXd8/v": {
+    "translation": "Password is required to sign in.",
+    "message": "Password is required to sign in.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
+        46
+      ]
+    ]
   },
   "k1fybU": {
     "message": "Password is required.",
@@ -199,17 +299,53 @@
     ],
     "translation": "Password must be at least 8 characters long."
   },
+  "fPcxeb": {
+    "translation": "Permission to access the gallery is required!",
+    "message": "Permission to access the gallery is required!",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/OutfitPreview/ImagePicker/index.tsx",
+        29
+      ]
+    ]
+  },
+  "qK3dFT": {
+    "translation": "Provide password to get the key",
+    "message": "Provide password to get the key",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Vault/AIModelKeyVault/index.ts",
+        33
+      ]
+    ]
+  },
+  "jJeOui": {
+    "translation": "Recent Edit",
+    "message": "Recent Edit",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(auth)/homepage.tsx",
+        48
+      ]
+    ]
+  },
   "sIf8gX": {
-    "translation": "Reset account",
     "message": "Reset account",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Login/index.tsx",
-        90
+        104
       ]
-    ]
+    ],
+    "translation": "Reset account"
   },
   "zzDlyQ": {
     "message": "Success",
@@ -222,7 +358,7 @@
       ],
       [
         "src/pages/(no-auth)/login.tsx",
-        26
+        27
       ]
     ],
     "translation": "Success"
@@ -234,22 +370,22 @@
     "origin": [
       [
         "src/pages/(no-auth)/login.tsx",
-        32
+        34
       ]
     ],
     "translation": "Unknown error occured. Please try again"
   },
   "+mAAak": {
-    "translation": "Unknown error occurred. Please try again later.",
     "message": "Unknown error occurred. Please try again later.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
-        63
+        71
       ]
-    ]
+    ],
+    "translation": "Unknown error occurred. Please try again later."
   },
   "3FWjYJ": {
     "message": "Unknown error. Please try again later.",
@@ -258,7 +394,7 @@
     "origin": [
       [
         "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
-        59
+        72
       ]
     ],
     "translation": "Unknown error. Please try again later."
@@ -299,6 +435,18 @@
     ],
     "translation": "Username must be at least 3 characters long."
   },
+  "NzoJRv": {
+    "translation": "Warning: Reset account will remove all associated data of your account! Are you sure about that?",
+    "message": "Warning: Reset account will remove all associated data of your account! Are you sure about that?",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/Auth/Login/ResetAccountModal/index.tsx",
+        21
+      ]
+    ]
+  },
   "2/SNNH": {
     "message": "Welcome back, {username}",
     "placeholders": {
@@ -310,13 +458,29 @@
     "origin": [
       [
         "src/pages/(no-auth)/login.tsx",
-        27
+        28
       ],
       [
         "src/pages/(no-auth)/login.tsx",
-        57
+        74
       ]
     ],
     "translation": "Welcome back, {username}"
+  },
+  "FFP3kS": {
+    "translation": "Welcome, {0}",
+    "message": "Welcome, {0}",
+    "placeholders": {
+      "0": [
+        "userData?.username"
+      ]
+    },
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(auth)/homepage.tsx",
+        22
+      ]
+    ]
   }
 }

@@ -15,7 +15,7 @@ import {
   I18nManager,
 } from 'react-native';
 import CameraIcon from '@/assets/images/icons/camera.svg';
-import { retrieveUserInfo } from '@/modules/Auth/LocalAuth/utils/retrieveUserInfo';
+import { retrieveUserInfo } from '@/utils/retrieveUserInfo';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NRouter } from '@/@types/router';
 

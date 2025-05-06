@@ -1,13 +1,11 @@
 import { EConfigKeys } from '@/constants/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Aes from 'react-native-aes-crypto';
+import { sha256, decrypt, encrypt } from 'react-native-aes-crypto';
 import { msg } from '@lingui/core/macro';
 import { i18n } from '@lingui/core';
+import BaseAuthentication from './BaseAuthentication';
 
-export class PasswordAuthentication {
-  private encryptionIV = 'b0b788dfbb144d9022c75374e6d9a92a';
-  private encryptionAlgorithm = 'aes-256-cbc' as const;
-
+export class PasswordAuthentication extends BaseAuthentication {
   private async getEncryptedPassword() {
     const encryptedPassword = await AsyncStorage.getItem(EConfigKeys.ENCRYPTED_PASSWORD);
 
@@ -15,21 +13,17 @@ export class PasswordAuthentication {
   }
 
   private async hashPassword(password: string) {
-    return await Aes.sha256(password);
-  }
-
-  private getAuthEncryptData() {
-    return Aes.randomKey(256);
+    return await sha256(password);
   }
 
   async saveCredentials(username: string, password: string) {
-    const iv = this.encryptionIV;
-    const algorithm = this.encryptionAlgorithm;
+    const iv = BaseAuthentication.encryptionIV;
+    const algorithm = BaseAuthentication.encryptionAlgorithm;
     const encryptKey = await this.hashPassword(password);
     const data = await this.getAuthEncryptData();
 
     // Combine encrypted data and auth tag
-    const result = await Aes.encrypt(data, encryptKey, iv, algorithm);
+    const result = await encrypt(data, encryptKey, iv, algorithm);
 
     await AsyncStorage.multiSet([
       [EConfigKeys.ENCRYPTED_PASSWORD, result],
@@ -47,7 +41,7 @@ export class PasswordAuthentication {
     }
 
     try {
-      const iv = this.encryptionIV;
+      const iv = BaseAuthentication.encryptionIV;
       const encryptedPassword = await this.getEncryptedPassword();
 
       if (!encryptedPassword) {
@@ -55,11 +49,13 @@ export class PasswordAuthentication {
       }
 
       const encryptKey = await this.hashPassword(password);
-      const algorithm = this.encryptionAlgorithm;
+      const algorithm = BaseAuthentication.encryptionAlgorithm;
 
-      await Aes.decrypt(encryptedPassword, encryptKey, iv, algorithm);
+      await decrypt(encryptedPassword, encryptKey, iv, algorithm);
 
-      return true;
+      BaseAuthentication.hashedPassword = encryptKey;
+
+      return password;
     } catch (error) {
       const typedError = error as Error & { code?: string };
       const isInvalidPassword = typedError.code === '-1';

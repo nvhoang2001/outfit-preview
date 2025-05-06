@@ -19,8 +19,8 @@ class BiometricAuthentication extends PasswordAuthentication {
     }
   }
 
-  static async hasStoredCredentials() {
-    return await Keychain.hasGenericPassword();
+  static hasStoredCredentials() {
+    return Keychain.hasGenericPassword();
   }
 
   async saveCredentials(username: string, password: string) {

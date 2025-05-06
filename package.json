@@ -18,6 +18,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@dr.pogodin/react-native-fs": "^2.32.1",
+    "@google/genai": "^0.10.0",
     "@lingui/core": "^5.3.0",
     "@lingui/react": "^5.3.0",
     "@react-native-async-storage/async-storage": "^2.1.2",
@@ -29,6 +31,7 @@
     "react-native-aes-crypto": "^3.2.1",
     "react-native-image-picker": "^8.2.0",
     "react-native-keychain": "^10.0.0",
+    "react-native-quick-base64": "^2.1.2",
     "react-native-reanimated": "^3.17.3",
     "react-native-safe-area-context": "^5.3.0",
     "react-native-screens": "^4.10.0",
@@ -57,8 +60,10 @@
     "@types/react": "^19.0.0",
     "@types/react-test-renderer": "^19.0.0",
     "babel-plugin-module-resolver": "^5.0.2",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^10.1.1",
+    "eslint-import-resolver-typescript": "^4.3.4",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-lingui": "^0.10.0",
     "eslint-plugin-prettier": "^5.2.6",

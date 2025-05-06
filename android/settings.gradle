@@ -3,4 +3,6 @@ plugins { id("com.facebook.react.settings") }
 extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
 rootProject.name = 'OutfitPreview'
 include ':app'
+include ':@dr.pogodin/react-native-fs'
 includeBuild('../node_modules/@react-native/gradle-plugin')
+project(':@dr.pogodin/react-native-fs').projectDir = new File(settingsDir, '../node_modules/@dr.pogodin/react-native-fs/android')

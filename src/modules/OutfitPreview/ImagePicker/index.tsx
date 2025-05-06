@@ -17,6 +17,7 @@ const CustomImagePicker: React.FC<ImagePickerProps> = ({ asset, onSelectFile }) 
     const pickerResult = await launchImageLibrary({
       mediaType: 'photo',
       quality: 1,
+      includeBase64: true,
     });
 
     const permissionGranted = pickerResult.errorCode !== 'permission';

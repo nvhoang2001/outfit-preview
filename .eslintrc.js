@@ -3,9 +3,9 @@ module.exports = {
   extends: [
     '@react-native',
     'prettier',
+    'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
-    'plugin:@typescript-eslint/recommended',
   ],
   ignorePatterns: ['node_modules/**', 'dist/**'],
   parserOptions: {
@@ -19,7 +19,7 @@ module.exports = {
     {
       files: ['*.ts', '*.tsx'],
       parserOptions: {
-        project: ['./tsconfig.json'],
+        project: 'tsconfig.json',
       },
       rules: {
         '@typescript-eslint/no-explicit-any': 'error',
@@ -54,9 +54,8 @@ module.exports = {
         'import/resolver': {
           typescript: {
             alwaysTryTypes: true,
-            project: ['./tsconfig.json'],
           },
-          'eslint-import-resolver-typescript': true,
+          moduleDirectory: ['src', 'node_modules'],
         },
         'import/ignore': ['\\.svg?url$'],
         'import/order': [

@@ -6,9 +6,7 @@ import LoginForm from '@/modules/Auth/Login';
 import Icon from '@/components/Icons';
 import PasswordAuthentication from '@/modules/Auth/LocalAuth/PasswordAuthentication';
 import Toast from 'react-native-toast-message';
-import { useLingui } from '@lingui/react';
-import { msg } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useState } from 'react';
 import BiometricAuthentication from '@/modules/Auth/LocalAuth/BiometricAuthentication';
 
@@ -16,7 +14,7 @@ type TProps = NativeStackScreenProps<NRouter.TRootStackParamList, 'login'>;
 
 const LoginPage: React.FC<TProps> = ({ navigation }) => {
   const username = useAuthStore(state => state.user!.username);
-  const { _: t } = useLingui();
+  const { t } = useLingui();
   const [authInstance, setAuthInstance] = useState<PasswordAuthentication | undefined>();
 
   async function signInWithPassword(password: string) {
@@ -25,24 +23,26 @@ const LoginPage: React.FC<TProps> = ({ navigation }) => {
 
       Toast.show({
         type: 'success',
-        text1: t(msg`Success`),
-        text2: t(msg`Welcome back, ${{ username }}`),
+        text1: t`Success`,
+        text2: t`Welcome back, ${{ username }}`,
       });
 
       navigation.replace('homepage');
     } catch (error) {
       const typedError = error as Error;
-      const errorMessage = typedError.message || t(msg`Unknown error occured. Please try again`);
+      const errorMessage = typedError.message || t`Unknown error occured. Please try again`;
 
       Toast.show({
         type: 'error',
-        text1: t(msg`:ogin failed`),
+        text1: t`Login failed`,
         text2: errorMessage,
       });
     }
   }
 
-  function signInWithBiometric() {}
+  async function signInWithBiometric() {
+    await authInstance!.signIn();
+  }
 
   function clearUserAccountInfo() {
     authInstance!.clearCredentials();
