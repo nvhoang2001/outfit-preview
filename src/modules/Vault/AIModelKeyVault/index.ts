@@ -1,7 +1,7 @@
 import { i18n } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { encrypt, decrypt } from 'react-native-aes-crypto';
+import Aes from 'react-native-aes-crypto';
 import BaseAuthentication from '@/modules/Auth/LocalAuth/BaseAuthentication';
 
 class AIModelKeyVault {
@@ -22,7 +22,7 @@ class AIModelKeyVault {
       throw new Error('');
     }
 
-    const encryptedKey = await encrypt(
+    const encryptedKey = await Aes.encrypt(
       key,
       hashKey,
       BaseAuthentication.encryptionIV,
@@ -46,7 +46,7 @@ class AIModelKeyVault {
     }
 
     try {
-      const storedKeyValue = await decrypt(
+      const storedKeyValue = await Aes.decrypt(
         encryptedKeyValue,
         hashKey,
         BaseAuthentication.encryptionIV,

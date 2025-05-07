@@ -1,4 +1,4 @@
-import { randomKey } from 'react-native-aes-crypto';
+import Aes from 'react-native-aes-crypto';
 
 class BaseAuthentication {
   static encryptionIV = 'b0b788dfbb144d9022c75374e6d9a92a';
@@ -6,7 +6,7 @@ class BaseAuthentication {
   static hashedPassword?: string;
 
   protected getAuthEncryptData() {
-    return randomKey(256);
+    return Aes.randomKey(256);
   }
 }
 

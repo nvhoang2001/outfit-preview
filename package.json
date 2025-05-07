@@ -15,7 +15,8 @@
     "i18n": "yarn i18n:extract && yarn i18n:compile",
     "i18n:extract": "lingui extract --clean --overwrite --locale en",
     "i18n:compile": "lingui compile",
-    "test": "jest"
+    "test": "jest",
+    "env:generate-declaration": "node scripts/generate-env-variables-declaration.mjs"
   },
   "dependencies": {
     "@dr.pogodin/react-native-fs": "^2.32.1",
@@ -29,6 +30,7 @@
     "react": "19.0.0",
     "react-native": "0.79.0",
     "react-native-aes-crypto": "^3.2.1",
+    "react-native-config": "^1.5.5",
     "react-native-image-picker": "^8.2.0",
     "react-native-keychain": "^10.0.0",
     "react-native-quick-base64": "^2.1.2",
@@ -60,7 +62,6 @@
     "@types/react": "^19.0.0",
     "@types/react-test-renderer": "^19.0.0",
     "babel-plugin-module-resolver": "^5.0.2",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-import-resolver-typescript": "^4.3.4",

@@ -1,5 +1,5 @@
 import * as Keychain from 'react-native-keychain';
-import { PasswordAuthentication } from './PasswordAuthentication';
+import PasswordAuthentication from './PasswordAuthentication';
 import { msg } from '@lingui/core/macro';
 import { i18n } from '@lingui/core';
 

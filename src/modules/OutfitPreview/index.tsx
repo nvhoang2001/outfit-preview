@@ -12,6 +12,7 @@ import imageGenerateServiceFactory from '../ImageGenerate/ImageGenerateServiceFa
 interface IProps {
   className?: string;
 }
+console.log('API key: ', process.env);
 
 function OutfitPreview({ className }: IProps) {
   const currentModel = useSettingStore(state => state.activeModel);
@@ -55,11 +56,16 @@ function OutfitPreview({ className }: IProps) {
 
   useEffect(() => {
     async function createModelService() {
-      const activeImageHandlingService =
-        await imageGenerateServiceFactory.createServiceModal(currentModel);
+      try {
+        const activeImageHandlingService =
+          await imageGenerateServiceFactory.createServiceModal(currentModel);
 
-      setActiveImageGenerateService(activeImageHandlingService);
+        setActiveImageGenerateService(activeImageHandlingService);
+      } catch (error) {
+        console.log('createModelService', error);
+      }
     }
+    console.log('Active model', currentModel);
 
     createModelService();
   }, [currentModel]);
