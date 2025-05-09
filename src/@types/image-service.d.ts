@@ -9,7 +9,10 @@ interface IGeneratedTextResult {
 
 interface IGeneratedImageResult {
   type: 'image';
-  data: Blob;
+  data: {
+    content: string;
+    mimeType: string;
+  };
 }
 
-type TImageGenerateResponse = IGeneratedImageResult | IGeneratedTextResult;
+type TImageGenerateResponse = (IGeneratedImageResult | IGeneratedTextResult) & { id: number };

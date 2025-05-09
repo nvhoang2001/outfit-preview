@@ -1,8 +1,8 @@
-import { i18n } from '@lingui/core';
-import { msg } from '@lingui/core/macro';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Aes from 'react-native-aes-crypto';
 import BaseAuthentication from '@/modules/Auth/LocalAuth/BaseAuthentication';
+import { ErrorWithCode } from '@/utils/createErrorWithCode';
+import { ERROR_CODE } from '@/constants/error-code';
 
 class AIModelKeyVault {
   static instance: AIModelKeyVault | undefined = undefined;
@@ -36,13 +36,13 @@ class AIModelKeyVault {
     const encryptedKeyValue = await AsyncStorage.getItem(`model_key_${key}`);
 
     if (!encryptedKeyValue) {
-      throw new Error(i18n._(msg`Not found encrypted key`));
+      throw new ErrorWithCode(ERROR_CODE.NOT_FOUND_AI_MODEL_KEY, 'No key stored for this model');
     }
 
     const hashKey = BaseAuthentication.hashedPassword;
 
     if (!hashKey) {
-      throw new Error(i18n._(msg`Provide password to get the key`));
+      throw new ErrorWithCode(ERROR_CODE.NO_AUTHENTICATION, 'User not login yet');
     }
 
     try {
@@ -59,10 +59,13 @@ class AIModelKeyVault {
       const isInvalidPassword = typedError.code === '-1';
 
       if (isInvalidPassword) {
-        throw new Error(i18n._(msg`Invalid password. Please try another one.`));
+        throw new ErrorWithCode(ERROR_CODE.INVALID_PASSWORD, 'Invalid stored password');
       }
 
-      throw new Error(i18n._(msg`Unknown error occurred. Please try again later.`));
+      throw new ErrorWithCode(
+        ERROR_CODE.UNKNOW_ERROR,
+        'Unknown error occurred. Please try again later.'
+      );
     }
   }
 }

@@ -3,7 +3,7 @@ import BaseImageGenerate from '../BaseService';
 import { GenerateContentParameters, GoogleGenAI, type Part } from '@google/genai';
 import type { Asset } from 'react-native-image-picker';
 import { readFile } from '@dr.pogodin/react-native-fs';
-import { atob } from 'react-native-quick-base64';
+import fakeData from './fake-data.json';
 
 class GeminiImageGenerativeSerivce extends BaseImageGenerate {
   baseConfig: Omit<GenerateContentParameters, 'contents'> = {
@@ -14,7 +14,6 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
       maxOutputTokens: 2048,
       responseModalities: ['TEXT', 'IMAGE'],
       temperature: 0.4,
-      candidateCount: 10,
     },
   };
   prompt: string =
@@ -30,8 +29,6 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
       apiKey: this.key,
     });
   }
-
-  static getKey() {}
 
   async initData(userImage: Asset, outfitImage: Asset) {
     if (userImage.base64) {
@@ -72,41 +69,59 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
       throw new Error(`Empty image selection`);
     }
 
-    const response = await this.instance.models.generateContent({
-      ...this.baseConfig,
-      contents: [
-        {
-          text: this.prompt,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    return fakeData.map((item, i) => ({ ...item, id: i }) as NImageService.TGeneratedResult);
+
+    const promptsConfigs: GenerateContentParameters[] = [];
+
+    for (let i = 0; i < 10; i++) {
+      promptsConfigs.push({
+        contents: [
+          {
+            text: this.prompt,
+          },
+          this.userImage,
+          this.outfitImage,
+        ],
+        model: this.baseConfig.model,
+        config: {
+          ...this.baseConfig.config,
+          temperature: this.baseConfig.config?.temperature ?? 0 + i * 0.1,
         },
-        this.userImage,
-        this.outfitImage,
-      ],
-    });
+      });
+    }
+
+    const requestsResults = await Promise.allSettled(
+      promptsConfigs.map(config => this.instance.models.generateContent(config))
+    );
 
     const results: NImageService.TGeneratedResult[] = [];
 
-    for (const candidate of response.candidates || []) {
-      for (const part of candidate.content?.parts || []) {
-        const type = part.text ? 'text' : 'image';
+    for (const requestResult of requestsResults) {
+      if (requestResult.status === 'fulfilled') {
+        for (const candidate of requestResult.value.candidates || []) {
+          for (const part of candidate.content?.parts || []) {
+            const type = part.text ? 'text' : 'image';
 
-        if (type === 'text') {
-          results.push({
-            type,
-            data: part.text as string,
-          });
+            if (type === 'text') {
+              results.push({
+                type,
+                data: part.text as string,
+              });
 
-          continue;
+              continue;
+            }
+
+            const mimeType = part.inlineData?.mimeType || 'image/png';
+            const data = part.inlineData!.data as string;
+
+            results.push({
+              type,
+              data: { content: data, mimeType },
+            });
+          }
         }
-
-        const data = new Blob([atob(part.inlineData!.data as string)], {
-          type: part.fileData!.mimeType || 'image/png',
-          lastModified: Number(response.createTime),
-        });
-
-        results.push({
-          type,
-          data,
-        });
       }
     }
 

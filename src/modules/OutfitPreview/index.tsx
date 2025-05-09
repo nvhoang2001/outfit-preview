@@ -2,7 +2,7 @@ import Button from '@/components/Button';
 import Icon from '@/components/Icons';
 import { Trans } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Image, ScrollView, Text, View } from 'react-native';
 import { type Asset } from 'react-native-image-picker';
 import CustomImagePicker from './ImagePicker';
 import BaseImageGenerate from '../ImageGenerate/BaseService';
@@ -12,7 +12,6 @@ import imageGenerateServiceFactory from '../ImageGenerate/ImageGenerateServiceFa
 interface IProps {
   className?: string;
 }
-console.log('API key: ', process.env);
 
 function OutfitPreview({ className }: IProps) {
   const currentModel = useSettingStore(state => state.activeModel);
@@ -22,6 +21,8 @@ function OutfitPreview({ className }: IProps) {
   const [activeImageGenerateService, setActiveImageGenerateService] = useState<BaseImageGenerate>();
   const [selectedImage, setSelectedImage] = useState<null | Asset>(null);
   const [selectedOutfitImage, setSelectedOutfitImage] = useState<null | Asset>(null);
+  const [generateResults, setGenerateResults] = useState<string[]>([]);
+
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
 
   const isNoSelectImage = !selectedImage && !selectedOutfitImage;
@@ -37,6 +38,14 @@ function OutfitPreview({ className }: IProps) {
       const generatedImageResult = await activeImageGenerateService?.generateImage();
 
       console.log('result: ', generatedImageResult);
+
+      setGenerateResults(
+        (generatedImageResult || [])
+          .map(item =>
+            item.type === 'image' ? `data:${item.data.mimeType};base64,${item.data.content}` : ''
+          )
+          .filter(Boolean)
+      );
     } catch (error) {
       console.log('Generate error: ', error);
     } finally {
@@ -58,7 +67,7 @@ function OutfitPreview({ className }: IProps) {
     async function createModelService() {
       try {
         const activeImageHandlingService =
-          await imageGenerateServiceFactory.createServiceModal(currentModel);
+          await imageGenerateServiceFactory.createServiceModel(currentModel);
 
         setActiveImageGenerateService(activeImageHandlingService);
       } catch (error) {
@@ -99,11 +108,24 @@ function OutfitPreview({ className }: IProps) {
             </Text>
           </View>
         )}
+
+        <View className="flex flex-row max-w-full flex-wrap mt-5 gap-1">
+          {generateResults.length &&
+            generateResults.map((image, i) => (
+              <Image
+                key={i}
+                source={{ uri: image }}
+                width={150}
+                height={150}
+                className="w-1/3 grow-[33%] shrink-[33%] basis-auto  aspect-square"
+              />
+            ))}
+        </View>
       </ScrollView>
 
       <View className="p-5">
         <Button
-          disabled={isNoSelectImage || isGeneratingImage}
+          disabled={!selectedImage || !selectedOutfitImage || isGeneratingImage}
           className="px-4 py-3 w-full bg-blue-400 disabled:bg-gray-300"
           onClick={generateImage}>
           <Text className="text-white text-center text-lg">
