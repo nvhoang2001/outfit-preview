@@ -55,7 +55,6 @@ module.exports = {
           typescript: {
             alwaysTryTypes: true,
           },
-          moduleDirectory: ['src', 'node_modules'],
         },
         'import/ignore': ['\\.svg?url$'],
         'import/order': [

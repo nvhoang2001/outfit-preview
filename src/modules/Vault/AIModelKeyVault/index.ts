@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Aes from 'react-native-aes-crypto';
 import BaseAuthentication from '@/modules/Auth/LocalAuth/BaseAuthentication';
-import { ErrorWithCode } from '@/utils/createErrorWithCode';
+import { ErrorWithCode } from '@/utils/ErrorWithCode';
 import { ERROR_CODE } from '@/constants/error-code';
 
 class AIModelKeyVault {

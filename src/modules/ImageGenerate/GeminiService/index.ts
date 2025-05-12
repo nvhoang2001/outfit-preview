@@ -71,7 +71,17 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    return fakeData.map((item, i) => ({ ...item, id: i }) as NImageService.TGeneratedResult);
+    return fakeData.map(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      (item, i) =>
+        ({
+          ...item,
+          id: i,
+          data:
+            item.type === 'image' ? `data:${item.data.mimeType};base64,${item.data.content}` : '',
+        }) as NImageService.TGeneratedResult
+    );
 
     const promptsConfigs: GenerateContentParameters[] = [];
 
@@ -87,7 +97,7 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
         model: this.baseConfig.model,
         config: {
           ...this.baseConfig.config,
-          temperature: this.baseConfig.config?.temperature ?? 0 + i * 0.1,
+          temperature: this.baseConfig.config!.temperature ?? 0 + i * 0.05,
         },
       });
     }

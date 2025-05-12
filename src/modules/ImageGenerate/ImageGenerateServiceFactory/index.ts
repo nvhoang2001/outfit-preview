@@ -3,7 +3,7 @@ import AIModelKeyVault from '@/modules/Vault/AIModelKeyVault';
 import GeminiImageGenerativeSerivce from '../GeminiService';
 import BaseImageGenerateService from '../BaseService';
 import { Config } from 'react-native-config';
-import { ErrorWithCode } from '@/utils/createErrorWithCode';
+import { ErrorWithCode } from '@/utils/ErrorWithCode';
 import { ERROR_CODE } from '@/constants/error-code';
 
 class ImageGenerateServiceFactory {

@@ -1,4 +1,3 @@
-import I18nProvider from '@/modules/Localization/I18nProvider';
 import { Trans } from '@lingui/react/macro';
 import { Modal, Pressable, Text, View } from 'react-native';
 

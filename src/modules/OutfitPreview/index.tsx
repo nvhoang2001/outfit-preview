@@ -1,31 +1,63 @@
 import Button from '@/components/Button';
 import Icon from '@/components/Icons';
 import { Trans } from '@lingui/react/macro';
-import { useEffect, useRef, useState } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
+import {
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+  type RefObject,
+} from 'react';
+import { ScrollView, Text, View } from 'react-native';
 import { type Asset } from 'react-native-image-picker';
 import CustomImagePicker from './ImagePicker';
 import BaseImageGenerate from '../ImageGenerate/BaseService';
 import useSettingStore from '@/store/setting.slice';
 import imageGenerateServiceFactory from '../ImageGenerate/ImageGenerateServiceFactory';
+import { NImageService } from '@/@types/image-service';
+import PreviewResultList from './PreviewResult';
+import useModal from '@/hooks/useModal';
+import ModalImageExpand from './ModalImageExpand';
+
+type TGeneratedImageResult = Exclude<NImageService.TGeneratedResult, { type: 'text' }>;
+type TImageId = TGeneratedImageResult['id'];
+
+interface IImperativeHandler {
+  retrieveGeneratedImages: () => TGeneratedImageResult[];
+}
 
 interface IProps {
   className?: string;
+  ref: RefObject<IImperativeHandler | undefined>;
 }
 
-function OutfitPreview({ className }: IProps) {
+function OutfitPreview({ className, ref }: IProps) {
+  const expandImageModal = useModal<TGeneratedImageResult>();
   const currentModel = useSettingStore(state => state.activeModel);
 
   const rfInitPromise = useRef<Promise<void> | undefined>(undefined);
 
   const [activeImageGenerateService, setActiveImageGenerateService] = useState<BaseImageGenerate>();
-  const [selectedImage, setSelectedImage] = useState<null | Asset>(null);
   const [selectedOutfitImage, setSelectedOutfitImage] = useState<null | Asset>(null);
-  const [generateResults, setGenerateResults] = useState<string[]>([]);
-
+  const [selectedImage, setSelectedImage] = useState<null | Asset>(null);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+  const [isInSelectionMode, setIsInSelectionMode] = useState(false);
+  const [generateResults, setGenerateResults] = useState<
+    NImageService.TGeneratedResult[] | undefined
+  >(undefined);
+  const [selectedImages, setSelectedImages] = useState<TImageId[]>([]);
 
   const isNoSelectImage = !selectedImage && !selectedOutfitImage;
+
+  const generatedImages = useMemo<TGeneratedImageResult[]>(() => {
+    if (!generateResults) {
+      return [];
+    }
+
+    return generateResults.filter(item => item.type !== 'text');
+  }, [generateResults]);
 
   async function generateImage() {
     setIsGeneratingImage(true);
@@ -37,21 +69,43 @@ function OutfitPreview({ className }: IProps) {
 
       const generatedImageResult = await activeImageGenerateService?.generateImage();
 
-      console.log('result: ', generatedImageResult);
-
-      setGenerateResults(
-        (generatedImageResult || [])
-          .map(item =>
-            item.type === 'image' ? `data:${item.data.mimeType};base64,${item.data.content}` : ''
-          )
-          .filter(Boolean)
-      );
+      setGenerateResults(generatedImageResult);
     } catch (error) {
       console.log('Generate error: ', error);
     } finally {
       setIsGeneratingImage(false);
     }
   }
+
+  function selectImage(imageId: TImageId) {
+    const isSelected = selectedImages.includes(imageId);
+
+    if (isSelected) {
+      setIsInSelectionMode(true);
+    }
+
+    setSelectedImages(
+      isSelected
+        ? selectedImages.filter(image => image !== imageId)
+        : selectedImages.concat(imageId)
+    );
+  }
+
+  function expandImage(imageId: TImageId) {
+    expandImageModal.openModal(generatedImages.find(image => image.id === imageId));
+  }
+
+  function exitSelectionModel() {
+    setIsInSelectionMode(false);
+  }
+
+  const retrieveGeneratedImages = useCallback(() => {
+    return generatedImages;
+  }, [generatedImages]);
+
+  useImperativeHandle(ref, () => {
+    return { retrieveGeneratedImages };
+  }, [retrieveGeneratedImages]);
 
   useEffect(() => {
     if (selectedImage && selectedOutfitImage) {
@@ -74,13 +128,19 @@ function OutfitPreview({ className }: IProps) {
         console.log('createModelService', error);
       }
     }
-    console.log('Active model', currentModel);
 
     createModelService();
   }, [currentModel]);
 
   return (
     <View className={className}>
+      <ModalImageExpand
+        images={generatedImages}
+        isOpen={expandImageModal.isOpen}
+        onClose={expandImageModal.closeModal}
+        image={expandImageModal.data}
+      />
+
       <ScrollView className="px-6">
         <View className="flex flex-row justify-center gap-5">
           <CustomImagePicker asset={selectedImage} onSelectFile={setSelectedImage} />
@@ -109,18 +169,15 @@ function OutfitPreview({ className }: IProps) {
           </View>
         )}
 
-        <View className="flex flex-row max-w-full flex-wrap mt-5 gap-1">
-          {generateResults.length &&
-            generateResults.map((image, i) => (
-              <Image
-                key={i}
-                source={{ uri: image }}
-                width={150}
-                height={150}
-                className="w-1/3 grow-[33%] shrink-[33%] basis-auto  aspect-square"
-              />
-            ))}
-        </View>
+        <PreviewResultList
+          isInSelectionMode={isInSelectionMode}
+          results={generatedImages}
+          selectImages={selectedImages}
+          isLoading={isGeneratingImage}
+          onSelectImage={selectImage}
+          onExpandImage={expandImage}
+          onExitSelectionMode={exitSelectionModel}
+        />
       </ScrollView>
 
       <View className="p-5">

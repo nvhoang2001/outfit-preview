@@ -12,6 +12,8 @@ import EmptyBoxIcon from '@/assets/images/icons/empty-box.svg';
 import MergeIcon from '@/assets/images/icons/merge.svg';
 import TrashIcon from '@/assets/images/icons/trash.svg';
 import PlusIcon from '@/assets/images/icons/plus.svg';
+import CloseIcon from '@/assets/images/icons/close.svg';
+import TickIcon from '@/assets/images/icons/tick.svg';
 
 import type { SVGProps } from 'react';
 
@@ -37,6 +39,8 @@ const icons = {
   merge: MergeIcon,
   trash: TrashIcon,
   plus: PlusIcon,
+  close: CloseIcon,
+  tick: TickIcon,
 };
 
 function Icon({ width, height, color, name, ...props }: IconProps) {
