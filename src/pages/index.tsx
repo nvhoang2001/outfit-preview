@@ -90,9 +90,22 @@ const StartScreen: React.FC<TProps> = ({ navigation }) => {
     }).start();
   }
 
+  async function loadSupportedLocalesPluralsConfig() {
+    await Promise.allSettled([
+      import(`@formatjs/intl-pluralrules/locale-data/en`),
+      import(`@formatjs/intl-pluralrules/locale-data/vi`),
+    ]);
+  }
+
   async function initAppData() {
     const minLoad = new Promise<void>(resolve => setTimeout(resolve, 1000));
-    const task = [checkBiometricAvailability(), checkActiveLocaleLang(), getUserInfo(), minLoad];
+    const task = [
+      checkBiometricAvailability(),
+      checkActiveLocaleLang(),
+      getUserInfo(),
+      loadSupportedLocalesPluralsConfig(),
+      minLoad,
+    ];
     try {
       await Promise.all(task);
 

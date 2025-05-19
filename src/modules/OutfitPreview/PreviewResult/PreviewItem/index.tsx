@@ -20,17 +20,19 @@ function PreviewItem({
   ...props
 }: IProps) {
   return (
-    <Pressable
-      className="relative"
-      onPress={() => onExpandImage(itemId)}
-      onLongPress={() => onSelectImage(itemId)}>
-      <View className="absolute top-1 right-1 border border-solid border-white rounded-full">
-        <Icon name="tick" className={isSelecting ? 'opacity-100' : 'opacity-0'} />
-      </View>
-
-      <Animated.Image {...props} />
-    </Pressable>
+    <View className="relative">
+      <Pressable
+        onPress={() => onSelectImage(itemId)}
+        className={`${showSelectBox ? 'opacity-100' : 'opacity-0'} absolute top-2 right-2 border border-solid border-white rounded-full z-10 bg-white/50`}>
+        <View className={isSelecting ? 'opacity-100' : 'opacity-0'}>
+          <Icon name="tick" width={16} height={16} />
+        </View>
+      </Pressable>
+      <Pressable onPress={() => onExpandImage(itemId)} onLongPress={() => onSelectImage(itemId)}>
+        <Animated.Image {...props} />
+      </Pressable>
+    </View>
   );
 }
 
-export default Animated.createAnimatedComponent(PreviewItem);
+export default PreviewItem;

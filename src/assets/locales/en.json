@@ -1,37 +1,53 @@
 {
   "Sdt5QF": {
-    "translation": " No, let me try again ",
     "message": " No, let me try again ",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Login/ResetAccountModal/index.tsx",
-        32
+        31
       ]
-    ]
+    ],
+    "translation": " No, let me try again "
   },
   "vxzopl": {
-    "translation": " Reset account? ",
     "message": " Reset account? ",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Login/ResetAccountModal/index.tsx",
-        17
+        16
       ]
-    ]
+    ],
+    "translation": " Reset account? "
   },
   "9Z2uvm": {
-    "translation": " Yes, reset my account ",
     "message": " Yes, reset my account ",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Login/ResetAccountModal/index.tsx",
-        39
+        38
+      ]
+    ],
+    "translation": " Yes, reset my account "
+  },
+  "wM6k9/": {
+    "translation": "{0, plural, one {Select item: # item} zero {Select item: # item} other {Select items: # items}}",
+    "message": "{0, plural, one {Select item: # item} zero {Select item: # item} other {Select items: # items}}",
+    "placeholders": {
+      "0": [
+        "selectImages.length"
+      ]
+    },
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/OutfitPreview/PreviewResult/index.tsx",
+        67
       ]
     ]
   },
@@ -47,15 +63,23 @@
     ],
     "translation": "Account info saved successfully."
   },
+  "TUZ2h/": {
+    "translation": "An unknow error occured, please try again",
+    "message": "An unknow error occured, please try again",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(auth)/outfit-preview.tsx",
+        53
+      ]
+    ]
+  },
   "5Mh8FV": {
     "message": "Biometric authentication failed.",
     "placeholders": {},
     "comments": [],
     "origin": [
-      [
-        "src/modules/Vault/AIModelKeyVault/index.ts",
-        21
-      ],
       [
         "src/modules/Auth/LocalAuth/BiometricAuthentication.ts",
         59
@@ -80,7 +104,6 @@
     "translation": "Biometric canceled by the user."
   },
   "rT2cV+": {
-    "translation": "Camera",
     "message": "Camera",
     "placeholders": {},
     "comments": [],
@@ -88,6 +111,31 @@
       [
         "src/pages/(auth)/homepage.tsx",
         41
+      ]
+    ],
+    "translation": "Camera"
+  },
+  "XyHl14": {
+    "translation": "Cannot save some images",
+    "message": "Cannot save some images",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(auth)/outfit-preview.tsx",
+        94
+      ]
+    ]
+  },
+  "FBIuPX": {
+    "translation": "Clear selection",
+    "message": "Clear selection",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/OutfitPreview/PreviewResult/index.tsx",
+        76
       ]
     ]
   },
@@ -116,16 +164,16 @@
     "translation": "Explore Now"
   },
   "LgEa00": {
-    "translation": "Failed to launch image picker",
     "message": "Failed to launch image picker",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/OutfitPreview/ImagePicker/index.tsx",
-        28
+        29
       ]
-    ]
+    ],
+    "translation": "Failed to launch image picker"
   },
   "jSUUON": {
     "message": "Failed to save account info, please try again later.",
@@ -138,6 +186,18 @@
       ]
     ],
     "translation": "Failed to save account info, please try again later."
+  },
+  "R7XG98": {
+    "translation": "Failed to store image",
+    "message": "Failed to store image",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(auth)/outfit-preview.tsx",
+        52
+      ]
+    ]
   },
   "tbiS5I": {
     "message": "Forgot password? ",
@@ -152,16 +212,16 @@
     "translation": "Forgot password? "
   },
   "UQ4o1/": {
-    "translation": "Generate image",
     "message": "Generate image",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/OutfitPreview/index.tsx",
-        65
+        218
       ]
-    ]
+    ],
+    "translation": "Generate image"
   },
   "Q54Y6h": {
     "message": "Invalid password. Please try another one.",
@@ -170,7 +230,7 @@
     "origin": [
       [
         "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
-        68
+        66
       ]
     ],
     "translation": "Invalid password. Please try another one."
@@ -188,16 +248,16 @@
     "translation": "Let's go"
   },
   "4GKuCs": {
-    "translation": "Login failed",
     "message": "Login failed",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/pages/(no-auth)/login.tsx",
-        38
+        37
       ]
-    ]
+    ],
+    "translation": "Login failed"
   },
   "T4zr9t": {
     "message": "Login to your account",
@@ -206,7 +266,7 @@
     "origin": [
       [
         "src/pages/(no-auth)/login.tsx",
-        77
+        78
       ]
     ],
     "translation": "Login to your account"
@@ -218,22 +278,22 @@
     "origin": [
       [
         "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
-        54
+        48
       ]
     ],
     "translation": "No password found"
   },
   "owXMlO": {
-    "translation": "No selected items, pick one to proceed",
     "message": "No selected items, pick one to proceed",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/OutfitPreview/index.tsx",
-        53
+        196
       ]
-    ]
+    ],
+    "translation": "No selected items, pick one to proceed"
   },
   "8ZsakT": {
     "message": "Password",
@@ -264,16 +324,16 @@
     "translation": "Password is required"
   },
   "ZXd8/v": {
-    "translation": "Password is required to sign in.",
     "message": "Password is required to sign in.",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
-        46
+        40
       ]
-    ]
+    ],
+    "translation": "Password is required to sign in."
   },
   "k1fybU": {
     "message": "Password is required.",
@@ -300,31 +360,18 @@
     "translation": "Password must be at least 8 characters long."
   },
   "fPcxeb": {
-    "translation": "Permission to access the gallery is required!",
     "message": "Permission to access the gallery is required!",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/OutfitPreview/ImagePicker/index.tsx",
-        29
+        30
       ]
-    ]
-  },
-  "qK3dFT": {
-    "translation": "Provide password to get the key",
-    "message": "Provide password to get the key",
-    "placeholders": {},
-    "comments": [],
-    "origin": [
-      [
-        "src/modules/Vault/AIModelKeyVault/index.ts",
-        33
-      ]
-    ]
+    ],
+    "translation": "Permission to access the gallery is required!"
   },
   "jJeOui": {
-    "translation": "Recent Edit",
     "message": "Recent Edit",
     "placeholders": {},
     "comments": [],
@@ -333,7 +380,8 @@
         "src/pages/(auth)/homepage.tsx",
         48
       ]
-    ]
+    ],
+    "translation": "Recent Edit"
   },
   "sIf8gX": {
     "message": "Reset account",
@@ -347,6 +395,18 @@
     ],
     "translation": "Reset account"
   },
+  "+MTE2h": {
+    "translation": "Save all images",
+    "message": "Save all images",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/modules/OutfitPreview/AdditionalCommands/index.tsx",
+        22
+      ]
+    ]
+  },
   "zzDlyQ": {
     "message": "Success",
     "placeholders": {},
@@ -358,10 +418,22 @@
       ],
       [
         "src/pages/(no-auth)/login.tsx",
-        27
+        26
       ]
     ],
     "translation": "Success"
+  },
+  "OhbtCK": {
+    "translation": "The unsave images has been selected, please check that.",
+    "message": "The unsave images has been selected, please check that.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/pages/(auth)/outfit-preview.tsx",
+        95
+      ]
+    ]
   },
   "djCgAy": {
     "message": "Unknown error occured. Please try again",
@@ -370,7 +442,7 @@
     "origin": [
       [
         "src/pages/(no-auth)/login.tsx",
-        34
+        33
       ]
     ],
     "translation": "Unknown error occured. Please try again"
@@ -382,7 +454,7 @@
     "origin": [
       [
         "src/modules/Auth/LocalAuth/PasswordAuthentication.ts",
-        71
+        69
       ]
     ],
     "translation": "Unknown error occurred. Please try again later."
@@ -436,16 +508,16 @@
     "translation": "Username must be at least 3 characters long."
   },
   "NzoJRv": {
-    "translation": "Warning: Reset account will remove all associated data of your account! Are you sure about that?",
     "message": "Warning: Reset account will remove all associated data of your account! Are you sure about that?",
     "placeholders": {},
     "comments": [],
     "origin": [
       [
         "src/modules/Auth/Login/ResetAccountModal/index.tsx",
-        21
+        20
       ]
-    ]
+    ],
+    "translation": "Warning: Reset account will remove all associated data of your account! Are you sure about that?"
   },
   "2/SNNH": {
     "message": "Welcome back, {username}",
@@ -458,17 +530,16 @@
     "origin": [
       [
         "src/pages/(no-auth)/login.tsx",
-        28
+        27
       ],
       [
         "src/pages/(no-auth)/login.tsx",
-        74
+        75
       ]
     ],
     "translation": "Welcome back, {username}"
   },
   "FFP3kS": {
-    "translation": "Welcome, {0}",
     "message": "Welcome, {0}",
     "placeholders": {
       "0": [
@@ -481,6 +552,7 @@
         "src/pages/(auth)/homepage.tsx",
         22
       ]
-    ]
+    ],
+    "translation": "Welcome, {0}"
   }
 }

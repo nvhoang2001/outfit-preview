@@ -6,6 +6,10 @@ abstract class BaseImageGenerateService {
 
   abstract initData(_userImage: Asset, _outfitImage: Asset): Promise<void>;
   abstract generateImage(): Promise<NImageService.TGeneratedResult[]>;
+  changeConfig(_key: string, _value: unknown) {}
+  getConfig(_key: string): unknown {
+    return null as unknown;
+  }
 }
 
 export default BaseImageGenerateService;

@@ -14,6 +14,8 @@ import TrashIcon from '@/assets/images/icons/trash.svg';
 import PlusIcon from '@/assets/images/icons/plus.svg';
 import CloseIcon from '@/assets/images/icons/close.svg';
 import TickIcon from '@/assets/images/icons/tick.svg';
+import ExpandIcon from '@/assets/images/icons/expand.svg';
+import SettingIcon from '@/assets/images/icons/settings.svg';
 
 import type { SVGProps } from 'react';
 
@@ -41,6 +43,8 @@ const icons = {
   plus: PlusIcon,
   close: CloseIcon,
   tick: TickIcon,
+  expand: ExpandIcon,
+  setting: SettingIcon,
 };
 
 function Icon({ width, height, color, name, ...props }: IconProps) {

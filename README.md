@@ -106,9 +106,15 @@ You've successfully run and modified your React Native App. :partying_face:
 # Troubleshooting
 1. NDK at ~/Library/Android/sdk/ndk-bundle did not have a source.properties file
 
-2. 
-
 If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+
+# Update app icon:
+
+1. The app icon is stored at path `src/assets/images/app-icon.png`, when you want to update the icon, looking to this path and override the file.
+2. After override the file, run CLI `create-appicon` to generate new app icon.
+3. Run the build again
+
+
 
 # Learn More
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image, Pressable } from 'react-native';
 import { launchImageLibrary, type Asset } from 'react-native-image-picker';
 import { useLingui } from '@lingui/react/macro';
 import Toast from 'react-native-toast-message';
@@ -8,9 +8,10 @@ import Icon from '@/components/Icons';
 interface ImagePickerProps {
   asset: Asset | null;
   onSelectFile: (asset: Asset | null) => void;
+  onExpandFile: (asset: Asset) => void;
 }
 
-const CustomImagePicker: React.FC<ImagePickerProps> = ({ asset, onSelectFile }) => {
+const CustomImagePicker: React.FC<ImagePickerProps> = ({ asset, onSelectFile, onExpandFile }) => {
   const { t } = useLingui();
 
   const openImagePicker = async () => {
@@ -37,16 +38,24 @@ const CustomImagePicker: React.FC<ImagePickerProps> = ({ asset, onSelectFile }) 
   };
 
   return (
-    <View className="flex justify-center items-center w-1/2">
+    <View className="flex relative shrink justify-center items-center w-1/2">
       <TouchableOpacity
         className="rounded-lg border border-solid border-gray-200 flex justify-center items-center overflow-hidden w-full aspect-square"
         onPress={openImagePicker}>
         {asset ? (
           <Image source={{ uri: asset.uri }} className="w-full h-full" />
         ) : (
-          <Icon name="plus" width={50} height={50} className="" />
+          <Icon name="plus" width={50} height={50} />
         )}
       </TouchableOpacity>
+
+      {asset && (
+        <Pressable
+          onPress={() => onExpandFile(asset)}
+          className="absolute top-3 right-3 p-1 bg-white/50">
+          <Icon name="expand" width={16} height={16} />
+        </Pressable>
+      )}
     </View>
   );
 };

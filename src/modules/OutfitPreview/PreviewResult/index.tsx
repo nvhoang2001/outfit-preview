@@ -2,8 +2,10 @@ import { NImageService } from '@/@types/image-service';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Text, View } from 'react-native';
 import PreviewItem from './PreviewItem';
-import { Trans } from '@lingui/react/macro';
+import { Trans, Plural } from '@lingui/react/macro';
 import Button from '@/components/Button';
+import { ResponsiveGrid } from 'react-native-flexible-grid';
+import ErrorCapture from '@/components/ErrorCapture';
 
 type TGeneratedImageResult = Exclude<NImageService.TGeneratedResult, { type: 'text' }>;
 
@@ -59,45 +61,62 @@ function PreviewResultList({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
   return (
-    <View>
-      <View className="flex flex-row justify-between items-center">
-        <Text>
-          <Trans>Select items</Trans>
-        </Text>
-        <Button onClick={onExitSelectionMode}>
-          <Text>
-            <Trans>Cancel selection</Trans>
-          </Text>
-        </Button>
-      </View>
-      <View className="flex flex-row max-w-full flex-wrap mt-5 gap-1">
-        {results.map((image, i) => {
-          const isSelecting = selectImages.includes(image.id);
+    <View className="h-full">
+      {isInSelectionMode && (
+        <View className="flex flex-row justify-between items-center mb-5">
+          <ErrorCapture>
+            <Text className={isInSelectionMode ? 'text-black dark:text-white' : 'text-transparent'}>
+              <Plural
+                value={selectImages.length}
+                _1="Select item: # item"
+                _0="Select item: # item"
+                other="Select items: # items"
+              />
+            </Text>
+          </ErrorCapture>
 
-          return (
-            <PreviewItem
-              itemId={image.id}
-              isSelecting={isSelecting}
-              showSelectBox={isInSelectionMode}
-              onExpandImage={onExpandImage}
-              onSelectImage={onSelectImage}
-              source={{
-                uri: image.data.content,
-              }}
-              style={{
-                opacity: animationValues.current[i],
-                transform: [
-                  {
-                    translateY: animationValues.current[i].interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [20, 0],
-                    }),
-                  },
-                ],
-              }}
-            />
-          );
-        })}
+          <Button onClick={onExitSelectionMode}>
+            <Text className="text-black dark:text-white">
+              <Trans>Clear selection</Trans>
+            </Text>
+          </Button>
+        </View>
+      )}
+      <View className="h-full max-w-full px-0">
+        <ResponsiveGrid
+          keyExtractor={item => item.id}
+          data={results}
+          maxItemsPerColumn={3}
+          renderItem={({ item: image, index: i }) => {
+            const isSelecting = selectImages.includes(image.id);
+
+            return (
+              <PreviewItem
+                itemId={image.id}
+                isSelecting={isSelecting}
+                showSelectBox={isInSelectionMode}
+                onExpandImage={onExpandImage}
+                onSelectImage={onSelectImage}
+                source={{
+                  uri: image.data.content,
+                }}
+                className="w-full aspect-square border-4 border-solid border-transparent"
+                style={{
+                  opacity: animationValues.current[i] ?? 0,
+                  transform: [
+                    {
+                      translateY:
+                        animationValues.current[i]?.interpolate?.({
+                          inputRange: [0, 1],
+                          outputRange: [20, 0],
+                        }) ?? 20,
+                    },
+                  ],
+                }}
+              />
+            );
+          }}
+        />
       </View>
     </View>
   );

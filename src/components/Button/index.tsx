@@ -4,12 +4,14 @@ interface IProps {
   children: React.ReactNode;
   className?: string;
   disabled?: boolean;
+  id?: string;
   onClick?: (ev: GestureResponderEvent) => void;
 }
 
-function Button({ children, onClick, className, disabled }: IProps) {
+function Button({ id, children, onClick, className, disabled }: IProps) {
   return (
     <Pressable
+      id={id}
       className={'rounded-lg text-white '.concat(className ?? '')}
       disabled={disabled}
       onPress={onClick}>

@@ -3,7 +3,6 @@ import BaseImageGenerate from '../BaseService';
 import { GenerateContentParameters, GoogleGenAI, type Part } from '@google/genai';
 import type { Asset } from 'react-native-image-picker';
 import { readFile } from '@dr.pogodin/react-native-fs';
-import fakeData from './fake-data.json';
 
 class GeminiImageGenerativeSerivce extends BaseImageGenerate {
   baseConfig: Omit<GenerateContentParameters, 'contents'> = {
@@ -69,20 +68,6 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
       throw new Error(`Empty image selection`);
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    return fakeData.map(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      (item, i) =>
-        ({
-          ...item,
-          id: i,
-          data:
-            item.type === 'image' ? `data:${item.data.mimeType};base64,${item.data.content}` : '',
-        }) as NImageService.TGeneratedResult
-    );
-
     const promptsConfigs: GenerateContentParameters[] = [];
 
     for (let i = 0; i < 10; i++) {
@@ -107,6 +92,7 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
     );
 
     const results: NImageService.TGeneratedResult[] = [];
+    let i = 0;
 
     for (const requestResult of requestsResults) {
       if (requestResult.status === 'fulfilled') {
@@ -116,6 +102,7 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
 
             if (type === 'text') {
               results.push({
+                id: i++,
                 type,
                 data: part.text as string,
               });
@@ -127,6 +114,7 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
             const data = part.inlineData!.data as string;
 
             results.push({
+              id: i++,
               type,
               data: { content: data, mimeType },
             });
@@ -136,6 +124,19 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
     }
 
     return results;
+  }
+
+  changeConfig(key: string, value: unknown): void {
+    if (key === 'prompt') {
+      this.prompt = value as string;
+    }
+  }
+  getConfig(key: string): unknown {
+    if (key === 'prompt') {
+      return this.prompt;
+    }
+
+    return null;
   }
 }
 

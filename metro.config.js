@@ -1,5 +1,6 @@
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 const { withNativeWind } = require('nativewind/metro');
+const { wrapWithReanimatedMetroConfig } = require('react-native-reanimated/metro-config');
 
 const defaultConfig = getDefaultConfig(__dirname);
 const { assetExts, sourceExts } = defaultConfig.resolver;
@@ -20,9 +21,11 @@ const extendConfig = {
 };
 const svgConfig = withSvgTransformer();
 
-module.exports = withNativeWind(mergeConfig(defaultConfig, svgConfig, extendConfig), {
-  input: './src/styles/global.css',
-});
+module.exports = wrapWithReanimatedMetroConfig(
+  withNativeWind(mergeConfig(defaultConfig, svgConfig, extendConfig), {
+    input: './src/styles/global.css',
+  })
+);
 
 function withSvgTransformer() {
   return {

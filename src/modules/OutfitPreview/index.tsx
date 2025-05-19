@@ -20,12 +20,23 @@ import { NImageService } from '@/@types/image-service';
 import PreviewResultList from './PreviewResult';
 import useModal from '@/hooks/useModal';
 import ModalImageExpand from './ModalImageExpand';
+import { intersectionWith as _intersectionWith, differenceWith as _differenceWith } from 'lodash';
+import ModalUpdatePrompt from './ModalUpdatePrompt';
 
 type TGeneratedImageResult = Exclude<NImageService.TGeneratedResult, { type: 'text' }>;
 type TImageId = TGeneratedImageResult['id'];
 
+type TExpandImageModal = {
+  images: TGeneratedImageResult[];
+  expandImage: TGeneratedImageResult;
+};
+
 interface IImperativeHandler {
-  retrieveGeneratedImages: () => TGeneratedImageResult[];
+  retrieveGeneratedImages: (imageId?: TImageId[]) => TGeneratedImageResult[];
+  highlightSelectImage: (imageId: TImageId[]) => void;
+  retrieveSelectedImages: () => TImageId[];
+  openUpdatePromptModal: () => void;
+  removeImages: (ids?: TImageId[]) => void;
 }
 
 interface IProps {
@@ -34,7 +45,8 @@ interface IProps {
 }
 
 function OutfitPreview({ className, ref }: IProps) {
-  const expandImageModal = useModal<TGeneratedImageResult>();
+  const promptModal = useModal<string>();
+  const expandImageModal = useModal<Partial<TExpandImageModal>>();
   const currentModel = useSettingStore(state => state.activeModel);
 
   const rfInitPromise = useRef<Promise<void> | undefined>(undefined);
@@ -77,7 +89,7 @@ function OutfitPreview({ className, ref }: IProps) {
     }
   }
 
-  function selectImage(imageId: TImageId) {
+  function selectImageFromGeneratedImagesList(imageId: TImageId) {
     const isSelected = selectedImages.includes(imageId);
 
     if (isSelected) {
@@ -91,21 +103,96 @@ function OutfitPreview({ className, ref }: IProps) {
     );
   }
 
-  function expandImage(imageId: TImageId) {
-    expandImageModal.openModal(generatedImages.find(image => image.id === imageId));
+  function expandImageFromGeneratedImagesList(imageId: TImageId) {
+    const expandImage = generatedImages.find(image => image.id === imageId) ?? undefined;
+
+    expandImageModal.openModal({
+      expandImage,
+      images: generatedImages,
+    });
   }
 
   function exitSelectionModel() {
     setIsInSelectionMode(false);
+    setSelectedImages([]);
   }
 
-  const retrieveGeneratedImages = useCallback(() => {
-    return generatedImages;
-  }, [generatedImages]);
+  function expandPickedImage(image: Asset) {
+    expandImageModal.openModal({
+      images: [],
+      expandImage: {
+        id: 1,
+        data: {
+          content: image.uri!,
+          mimeType: image.type!,
+        },
+        type: 'image',
+      },
+    });
+  }
+
+  const retrieveGeneratedImages = useCallback(
+    (ids?: TImageId[]) => {
+      if (!ids?.length) {
+        return generatedImages;
+      }
+
+      return generatedImages.filter(image => ids.includes(image.id));
+    },
+    [generatedImages]
+  );
+
+  const highlightSelectImage = useCallback((imageId: TImageId[]) => {
+    setIsInSelectionMode(true);
+    setSelectedImages(imageId);
+  }, []);
+
+  const retrieveSelectedImages = useCallback(() => {
+    return selectedImages;
+  }, [selectedImages]);
+
+  const removeImages = useCallback((ids?: TImageId[]) => {
+    setSelectedImages([]);
+
+    if (!ids?.length) {
+      setGenerateResults([]);
+
+      return;
+    }
+
+    return setGenerateResults(images => (images ?? [])?.filter(image => !ids.includes(image.id)));
+  }, []);
+
+  const openUpdatePromptModal = useCallback(() => {
+    return promptModal.openModal(activeImageGenerateService?.getConfig('prompt') as string);
+  }, [activeImageGenerateService, promptModal]);
+
+  function confirmUpdatePrompt(prompt: string) {
+    activeImageGenerateService?.changeConfig('prompt', prompt);
+  }
+
+  function restoreImageGenerationPrompt() {
+    activeImageGenerateService?.changeConfig(
+      'prompt',
+      'Generate a high-quality virtual try-on image showing the person wearing the clothing from the second image. Preserve all facial features, hairstyle, skin tone, body proportions, pose, and background.'
+    );
+  }
 
   useImperativeHandle(ref, () => {
-    return { retrieveGeneratedImages };
-  }, [retrieveGeneratedImages]);
+    return {
+      retrieveGeneratedImages,
+      highlightSelectImage,
+      retrieveSelectedImages,
+      openUpdatePromptModal,
+      removeImages,
+    };
+  }, [
+    highlightSelectImage,
+    openUpdatePromptModal,
+    retrieveGeneratedImages,
+    retrieveSelectedImages,
+    removeImages,
+  ]);
 
   useEffect(() => {
     if (selectedImage && selectedOutfitImage) {
@@ -135,29 +222,35 @@ function OutfitPreview({ className, ref }: IProps) {
   return (
     <View className={className}>
       <ModalImageExpand
-        images={generatedImages}
+        images={expandImageModal.data?.images ?? []}
         isOpen={expandImageModal.isOpen}
         onClose={expandImageModal.closeModal}
-        image={expandImageModal.data}
+        image={expandImageModal.data?.expandImage}
       />
 
-      <ScrollView className="px-6">
-        <View className="flex flex-row justify-center gap-5">
-          <CustomImagePicker asset={selectedImage} onSelectFile={setSelectedImage} />
-          <CustomImagePicker asset={selectedOutfitImage} onSelectFile={setSelectedOutfitImage} />
+      <ModalUpdatePrompt
+        isOpen={promptModal.isOpen}
+        savedPrompt={promptModal.data ?? ''}
+        onClose={promptModal.closeModal}
+        onConfirm={confirmUpdatePrompt}
+        onRestorePrompt={restoreImageGenerationPrompt}
+      />
+
+      <ScrollView className="px-5">
+        <View className="flex flex-row justify-center gap-5 w-full">
+          <CustomImagePicker
+            asset={selectedImage}
+            onExpandFile={expandPickedImage}
+            onSelectFile={setSelectedImage}
+          />
+          <CustomImagePicker
+            asset={selectedOutfitImage}
+            onExpandFile={expandPickedImage}
+            onSelectFile={setSelectedOutfitImage}
+          />
         </View>
 
-        <View
-          className="flex justify-center items-center"
-          style={{
-            transform: [
-              {
-                rotate: '180deg',
-              },
-            ],
-          }}>
-          <Icon width={24} height={24} name="merge" />
-        </View>
+        <View className="my-5" />
 
         {isNoSelectImage && (
           <View className="flex flex-col items-center justify-center mt-20 py-15 border border-dotted border-gray-600 bg-gray-200/50 rounded-lg">
@@ -174,8 +267,8 @@ function OutfitPreview({ className, ref }: IProps) {
           results={generatedImages}
           selectImages={selectedImages}
           isLoading={isGeneratingImage}
-          onSelectImage={selectImage}
-          onExpandImage={expandImage}
+          onSelectImage={selectImageFromGeneratedImagesList}
+          onExpandImage={expandImageFromGeneratedImagesList}
           onExitSelectionMode={exitSelectionModel}
         />
       </ScrollView>
