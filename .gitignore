@@ -78,3 +78,4 @@ yarn-error.log
 # react-native-config codegen
 ios/tmp.xcconfig
 !.env.example
+!.env.release.android.example
