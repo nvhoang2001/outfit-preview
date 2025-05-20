@@ -1,3 +1,4 @@
+import { twMerge } from 'tailwind-merge';
 import { type GestureResponderEvent, Pressable } from 'react-native';
 
 interface IProps {
@@ -12,7 +13,7 @@ function Button({ id, children, onClick, className, disabled }: IProps) {
   return (
     <Pressable
       id={id}
-      className={'rounded-lg text-white '.concat(className ?? '')}
+      className={twMerge('rounded-lg text-white ', className)}
       disabled={disabled}
       onPress={onClick}>
       {children}

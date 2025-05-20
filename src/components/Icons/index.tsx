@@ -1,3 +1,5 @@
+import { cssInterop } from 'nativewind';
+
 import CameraIcon from '@/assets/images/icons/camera.svg';
 import EyeIcon from '@/assets/images/icons/eye.svg';
 import EyeFoldIcon from '@/assets/images/icons/eye-fold.svg';
@@ -57,4 +59,8 @@ function Icon({ width, height, color, name, ...props }: IconProps) {
   return <IconComponent width={width} height={height} color={color} {...props} />;
 }
 
-export default Icon;
+export default cssInterop(Icon, {
+  className: {
+    target: 'style',
+  },
+});

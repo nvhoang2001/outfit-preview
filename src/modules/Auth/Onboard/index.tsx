@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { msg } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
-import { useLingui } from '@lingui/react';
+import { Trans, useLingui } from '@lingui/react/macro';
 import Icon from '@/components/Icons';
 
 interface IProps {
@@ -16,7 +14,7 @@ const styles = StyleSheet.create({
 });
 
 function OnboardForm({ onSubmit }: IProps) {
-  const { _: t } = useLingui();
+  const { t } = useLingui();
 
   const [username, setUsername] = useState('');
   const [usernameError, setUsernameError] = useState('');
@@ -36,12 +34,12 @@ function OnboardForm({ onSubmit }: IProps) {
 
   function validateUsername(text: string) {
     if (!text.trim()) {
-      setUsernameError(t(msg`Username is required.`));
+      setUsernameError(t`Username is required.`);
       return false;
     }
 
     if (text.length < 3) {
-      setUsernameError(t(msg`Username must be at least 3 characters long.`));
+      setUsernameError(t`Username must be at least 3 characters long.`);
       return false;
     }
 
@@ -50,12 +48,12 @@ function OnboardForm({ onSubmit }: IProps) {
 
   function validatePassword(text: string) {
     if (!text.trim()) {
-      setPasswordError(t(msg`Password is required.`));
+      setPasswordError(t`Password is required.`);
       return false;
     }
 
     if (text.length < 8) {
-      setPasswordError(t(msg`Password must be at least 8 characters long.`));
+      setPasswordError(t`Password must be at least 8 characters long.`);
       return false;
     }
 
@@ -74,8 +72,8 @@ function OnboardForm({ onSubmit }: IProps) {
     <View className="flex flex-col gap-y-5">
       <View>
         <TextInput
-          className="border border-gray-800 text-black dark:border-gray-50 dark:text-white py-3 px-4 rounded-md"
-          placeholder={t(msg`Username`)}
+          className="border border-gray-800 text-dark dark:text-white dark:border-gray-50 dark:text-white py-3 px-4 rounded-md"
+          placeholder={t`Username`}
           style={usernameError ? styles.inputError : {}}
           placeholderTextColor="#777"
           numberOfLines={1}
@@ -87,8 +85,8 @@ function OnboardForm({ onSubmit }: IProps) {
 
       <View className="relative">
         <TextInput
-          className="border border-gray-800 text-black dark:border-gray-50 dark:text-white py-3 pl-4 pr-14 rounded-md"
-          placeholder={t(msg`Password`)}
+          className="border border-gray-800 text-dark dark:text-white dark:border-gray-50 dark:text-white py-3 pl-4 pr-14 rounded-md"
+          placeholder={t`Password`}
           placeholderTextColor="#777"
           style={passwordError ? styles.inputError : {}}
           value={password}
@@ -107,7 +105,7 @@ function OnboardForm({ onSubmit }: IProps) {
       </View>
 
       <TouchableOpacity className="bg-cyan-400 py-3 rounded-md mt-6" onPress={saveNewUserInfo}>
-        <Text className="text-center text-black font-semibold">
+        <Text className="text-center text-white font-semibold">
           <Trans>Explore Now</Trans>
         </Text>
       </TouchableOpacity>

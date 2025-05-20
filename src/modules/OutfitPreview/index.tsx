@@ -1,6 +1,6 @@
 import Button from '@/components/Button';
 import Icon from '@/components/Icons';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import {
   useCallback,
   useEffect,
@@ -22,6 +22,12 @@ import useModal from '@/hooks/useModal';
 import ModalImageExpand from './ModalImageExpand';
 import { intersectionWith as _intersectionWith, differenceWith as _differenceWith } from 'lodash';
 import ModalUpdatePrompt from './ModalUpdatePrompt';
+import ModalSaveProjectInfo from './ModalSaveProjectInfo';
+import useProjectSlice from '@/store/project.slice';
+import { NProject } from '@/@types/work';
+import { ErrorWithCode } from '@/utils/ErrorWithCode';
+import { ERROR_CODE } from '@/constants/error-code';
+import Toast from 'react-native-toast-message';
 
 type TGeneratedImageResult = Exclude<NImageService.TGeneratedResult, { type: 'text' }>;
 type TImageId = TGeneratedImageResult['id'];
@@ -45,8 +51,11 @@ interface IProps {
 }
 
 function OutfitPreview({ className, ref }: IProps) {
+  const { addSavedProject: saveProjectToList } = useProjectSlice();
+  const { t } = useLingui();
   const promptModal = useModal<string>();
   const expandImageModal = useModal<Partial<TExpandImageModal>>();
+  const saveProjectModal = useModal();
   const currentModel = useSettingStore(state => state.activeModel);
 
   const rfInitPromise = useRef<Promise<void> | undefined>(undefined);
@@ -56,6 +65,7 @@ function OutfitPreview({ className, ref }: IProps) {
   const [selectedImage, setSelectedImage] = useState<null | Asset>(null);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [isInSelectionMode, setIsInSelectionMode] = useState(false);
+  const [canSaveProject, setCanSaveProject] = useState(false);
   const [generateResults, setGenerateResults] = useState<
     NImageService.TGeneratedResult[] | undefined
   >(undefined);
@@ -79,8 +89,12 @@ function OutfitPreview({ className, ref }: IProps) {
         await rfInitPromise.current;
       }
 
-      const generatedImageResult = await activeImageGenerateService?.generateImage();
+      const tmpProjectId = Date.now();
+      const generatedImageResult = await activeImageGenerateService?.generateImage(
+        String(tmpProjectId)
+      );
 
+      setCanSaveProject(true);
       setGenerateResults(generatedImageResult);
     } catch (error) {
       console.log('Generate error: ', error);
@@ -167,8 +181,37 @@ function OutfitPreview({ className, ref }: IProps) {
     return promptModal.openModal(activeImageGenerateService?.getConfig('prompt') as string);
   }, [activeImageGenerateService, promptModal]);
 
+  const openSaveProjectModal = saveProjectModal.openModal;
+
+  async function saveProject(projectName: string) {
+    const currentTimestamp = Date.now();
+    const projectData: NProject.ProjectItem = {
+      id: String(currentTimestamp),
+      name: projectName,
+      createdAt: currentTimestamp,
+      updatedAt: currentTimestamp,
+      thumbnailSrc: selectedImage!.uri as string,
+      selectedImages: [selectedImage!.uri!, selectedOutfitImage!.uri!],
+      resultImages: generatedImages.map(image => image.data.content),
+    };
+
+    try {
+      saveProjectToList(projectData);
+      saveProjectModal.closeModal();
+    } catch (error) {
+      if (error instanceof ErrorWithCode && error.code === ERROR_CODE.DUPLICATED_PROJECT_NAME) {
+        Toast.show({
+          type: 'error',
+          text1: t`Duplicated project name`,
+          text2: t`Detect duplicated project name, please choose another name`,
+        });
+      }
+    }
+  }
+
   function confirmUpdatePrompt(prompt: string) {
     activeImageGenerateService?.changeConfig('prompt', prompt);
+    setCanSaveProject(false);
   }
 
   function restoreImageGenerationPrompt() {
@@ -236,6 +279,12 @@ function OutfitPreview({ className, ref }: IProps) {
         onRestorePrompt={restoreImageGenerationPrompt}
       />
 
+      <ModalSaveProjectInfo
+        isOpen={saveProjectModal.isOpen}
+        onClose={saveProjectModal.closeModal}
+        onSave={saveProject}
+      />
+
       <ScrollView className="px-5">
         <View className="flex flex-row justify-center gap-5 w-full">
           <CustomImagePicker
@@ -250,13 +299,11 @@ function OutfitPreview({ className, ref }: IProps) {
           />
         </View>
 
-        <View className="my-5" />
-
         {isNoSelectImage && (
-          <View className="flex flex-col items-center justify-center mt-20 py-15 border border-dotted border-gray-600 bg-gray-200/50 rounded-lg">
+          <View className="flex flex-col items-center justify-center mt-5 py-15 border border-dotted border-gray-600 dark:border-gray-50 bg-blue-500/50 rounded-lg">
             <Icon name="empty-box" width={64} height={64} />
 
-            <Text className="text-gray-800 dark:text-white text-sm">
+            <Text className="text-dark dark:text-white text-sm">
               <Trans>No selected items, pick one to proceed</Trans>
             </Text>
           </View>
@@ -274,14 +321,24 @@ function OutfitPreview({ className, ref }: IProps) {
       </ScrollView>
 
       <View className="p-5">
-        <Button
-          disabled={!selectedImage || !selectedOutfitImage || isGeneratingImage}
-          className="px-4 py-3 w-full bg-blue-400 disabled:bg-gray-300"
-          onClick={generateImage}>
-          <Text className="text-white text-center text-lg">
-            <Trans>Generate image</Trans>
-          </Text>
-        </Button>
+        {canSaveProject ? (
+          <Button
+            className="px-4 py-3 w-full bg-blue-400 disabled:bg-gray-300"
+            onClick={openSaveProjectModal}>
+            <Text className="text-white text-center text-lg">
+              <Trans>Save project</Trans>
+            </Text>
+          </Button>
+        ) : (
+          <Button
+            disabled={!selectedImage || !selectedOutfitImage || isGeneratingImage}
+            className="px-4 py-3 w-full bg-blue-400 disabled:bg-gray-300/50"
+            onClick={generateImage}>
+            <Text className="text-white text-center text-lg">
+              <Trans>Generate image</Trans>
+            </Text>
+          </Button>
+        )}
       </View>
     </View>
   );

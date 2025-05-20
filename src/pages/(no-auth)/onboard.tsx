@@ -39,7 +39,7 @@ const OnboardPage: React.FC<TProps> = ({ navigation }) => {
   }
 
   return (
-    <View className="h-full bg-white dark:bg-slate-800 justify-center px-6 flex-grow shrink basis-auto w-full">
+    <View className="h-full bg-white dark:bg-neutral-900 justify-center px-6 flex-grow shrink basis-auto w-full">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} className="flex flex-col gap-y-5">
         <View className="flex flex-col justify-center gap-y-20 mt-10">
           <View className="flex flex-row justify-center w-full">

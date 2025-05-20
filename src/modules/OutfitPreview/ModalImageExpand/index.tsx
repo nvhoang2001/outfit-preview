@@ -44,7 +44,7 @@ function ModalImageExpand({ isOpen, onClose, image, images }: IProps) {
 
   return (
     <Modal animationType="fade" transparent visible={isOpen} onRequestClose={closeModal}>
-      <View className=" flex flex-col justify-center items-center bg-black/50 dark:bg-white/25 flex-auto">
+      <View className=" flex flex-col justify-center items-center bg-black/50 flex-auto">
         <View className="w-full flex items-center justify-center flex-auto py-3">
           <View className="relative h-auto">
             <Button

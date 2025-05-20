@@ -126,17 +126,27 @@ function OutfitPreviewPage({ navigation }: TProps) {
   }
 
   return (
-    <View className="h-full bg-white dark:bg-black">
+    <View className="h-full bg-white dark:bg-neutral-900">
       <View className="flex flex-row justify-between px-5 py-4">
         <Button onClick={goBack}>
-          <Icon name="arrow-back" className="w-5 h-5" width={32} height={32} />
+          <Icon
+            name="arrow-back"
+            className="w-8 h-8 text-dark dark:text-white"
+            width={32}
+            height={32}
+          />
         </Button>
 
         <View className="flex flex-row items-center gap-2">
           <Button
             className="w-8 h-8 justify-center items-center flex"
             onClick={openAdditionalCommands}>
-            <Icon name="three-dots-circle" width={24} height={24} className="object-scale-down" />
+            <Icon
+              name="three-dots-circle"
+              width={24}
+              height={24}
+              className="object-scale-down text-dark dark:text-white"
+            />
           </Button>
         </View>
       </View>

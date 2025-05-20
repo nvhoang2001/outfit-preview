@@ -1,4 +1,5 @@
 const colors = {
+  dark: '#1f2732',
   accent: {
     50: '#fee6f3',
     100: '#fccce7',

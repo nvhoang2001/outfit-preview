@@ -62,7 +62,7 @@ const LoginPage: React.FC<TProps> = ({ navigation }) => {
   }, []);
 
   return (
-    <View className="h-full bg-white dark:bg-slate-900">
+    <View className="h-full bg-white dark:bg-neutral-900">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="flex flex-col justify-end h-full pb-12 px-6">
           <View className="flex flex-row justify-center w-full">
@@ -71,10 +71,10 @@ const LoginPage: React.FC<TProps> = ({ navigation }) => {
             </View>
           </View>
           <View className="my-5">
-            <Text className="text-2xl font-semibold text-center">
+            <Text className="text-2xl font-semibold text-center text-dark dark:text-white">
               <Trans>Welcome back, {username}</Trans>
             </Text>
-            <Text className="text-base text-center mt-4">
+            <Text className="text-base text-center mt-4 text-dark dark:text-white">
               <Trans>Login to your account</Trans>
             </Text>
           </View>

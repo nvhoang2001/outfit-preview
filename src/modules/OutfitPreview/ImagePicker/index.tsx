@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, TouchableOpacity, Image, Pressable } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import { launchImageLibrary, type Asset } from 'react-native-image-picker';
 import { useLingui } from '@lingui/react/macro';
 import Toast from 'react-native-toast-message';
 import Icon from '@/components/Icons';
+import Button from '@/components/Button';
 
 interface ImagePickerProps {
   asset: Asset | null;
@@ -11,7 +12,7 @@ interface ImagePickerProps {
   onExpandFile: (asset: Asset) => void;
 }
 
-const CustomImagePicker: React.FC<ImagePickerProps> = ({ asset, onSelectFile, onExpandFile }) => {
+const CustomImagePicker: React.FC<ImagePickerProps> = ({ asset, onSelectFile }) => {
   const { t } = useLingui();
 
   const openImagePicker = async () => {
@@ -40,21 +41,21 @@ const CustomImagePicker: React.FC<ImagePickerProps> = ({ asset, onSelectFile, on
   return (
     <View className="flex relative shrink justify-center items-center w-1/2">
       <TouchableOpacity
-        className="rounded-lg border border-solid border-gray-200 flex justify-center items-center overflow-hidden w-full aspect-square"
+        className="rounded-lg border border-solid border-gray-50 flex justify-center items-center overflow-hidden w-full aspect-square"
         onPress={openImagePicker}>
         {asset ? (
           <Image source={{ uri: asset.uri }} className="w-full h-full" />
         ) : (
-          <Icon name="plus" width={50} height={50} />
+          <Icon name="plus" width={48} height={48} className="text-dark dark:text-white" />
         )}
       </TouchableOpacity>
 
       {asset && (
-        <Pressable
-          onPress={() => onExpandFile(asset)}
-          className="absolute top-3 right-3 p-1 bg-white/50">
-          <Icon name="expand" width={16} height={16} />
-        </Pressable>
+        <Button
+          onClick={() => onSelectFile(null)}
+          className="absolute top-3 right-3 p-1 bg-white/50 rounded-full">
+          <Icon name="close" width={16} height={16} className="text-black" />
+        </Button>
       )}
     </View>
   );

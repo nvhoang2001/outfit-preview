@@ -68,7 +68,7 @@ function LoginForm({ onSubmit, onSignInWithBiometric, onResetPassword }: IProps)
       <View className="flex flex-row gap-x-5">
         <View className="relative flex-1">
           <TextInput
-            className="border border-gray-800 text-black dark:border-gray-50 dark:text-white py-3 pl-4 pr-14 rounded-md"
+            className="border border-gray-800 text-dark dark:text-white dark:border-gray-50 dark:text-white py-3 pl-4 pr-14 rounded-md"
             placeholder={t(msg`Password`)}
             placeholderTextColor="#777"
             style={passwordError ? styles.inputError : {}}
@@ -96,7 +96,7 @@ function LoginForm({ onSubmit, onSignInWithBiometric, onResetPassword }: IProps)
       </View>
 
       <View className="flex flex-row gap-2">
-        <Text>
+        <Text className="text-dark dark:text-white">
           <Trans>Forgot password? </Trans>
         </Text>
         <TouchableOpacity onPress={requestResetAccount}>
@@ -107,7 +107,7 @@ function LoginForm({ onSubmit, onSignInWithBiometric, onResetPassword }: IProps)
       </View>
 
       <TouchableOpacity className="bg-cyan-400 py-3 rounded-md mt-28" onPress={signInWithPassword}>
-        <Text className="text-center text-black font-semibold">
+        <Text className="text-center text-white font-semibold">
           <Trans>Let's go</Trans>
         </Text>
       </TouchableOpacity>

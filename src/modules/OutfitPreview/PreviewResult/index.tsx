@@ -5,7 +5,6 @@ import PreviewItem from './PreviewItem';
 import { Trans, Plural } from '@lingui/react/macro';
 import Button from '@/components/Button';
 import { ResponsiveGrid } from 'react-native-flexible-grid';
-import ErrorCapture from '@/components/ErrorCapture';
 
 type TGeneratedImageResult = Exclude<NImageService.TGeneratedResult, { type: 'text' }>;
 
@@ -61,27 +60,26 @@ function PreviewResultList({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
   return (
-    <View className="h-full">
+    <View className="h-full mt-5">
       {isInSelectionMode && (
         <View className="flex flex-row justify-between items-center mb-5">
-          <ErrorCapture>
-            <Text className={isInSelectionMode ? 'text-black dark:text-white' : 'text-transparent'}>
-              <Plural
-                value={selectImages.length}
-                _1="Select item: # item"
-                _0="Select item: # item"
-                other="Select items: # items"
-              />
-            </Text>
-          </ErrorCapture>
+          <Text className="text-dark dark:text-white">
+            <Plural
+              value={selectImages.length}
+              _1="Select item: # item"
+              _0="Select item: # item"
+              other="Select items: # items"
+            />
+          </Text>
 
-          <Button onClick={onExitSelectionMode}>
-            <Text className="text-black dark:text-white">
+          <Button className="rounded-none" onClick={onExitSelectionMode}>
+            <Text className="text-dark dark:text-white">
               <Trans>Clear selection</Trans>
             </Text>
           </Button>
         </View>
       )}
+
       <View className="h-full max-w-full px-0">
         <ResponsiveGrid
           keyExtractor={item => item.id}
@@ -112,6 +110,9 @@ function PreviewResultList({
                         }) ?? 20,
                     },
                   ],
+                }}
+                onError={err => {
+                  console.log(err);
                 }}
               />
             );

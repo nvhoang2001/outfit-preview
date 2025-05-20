@@ -2,7 +2,10 @@ import { NImageService } from '@/@types/image-service';
 import BaseImageGenerate from '../BaseService';
 import { GenerateContentParameters, GoogleGenAI, type Part } from '@google/genai';
 import type { Asset } from 'react-native-image-picker';
-import { readFile } from '@dr.pogodin/react-native-fs';
+import * as fs from '@dr.pogodin/react-native-fs';
+import { getFileExtensionFromMimeType, getPictureDirPath } from '@/utils/assetsPathUtils';
+
+type TGeneratedImage = Exclude<NImageService.TGeneratedResult, { type: 'text' }>;
 
 class GeminiImageGenerativeSerivce extends BaseImageGenerate {
   baseConfig: Omit<GenerateContentParameters, 'contents'> = {
@@ -41,7 +44,7 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
       this.userImage = {
         inlineData: {
           mimeType: userImage.type,
-          data: await readFile(userImage.uri as string),
+          data: await fs.readFile(userImage.uri as string),
         },
       };
     }
@@ -57,13 +60,13 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
       this.outfitImage = {
         inlineData: {
           mimeType: outfitImage.type,
-          data: await readFile(outfitImage.uri as string),
+          data: await fs.readFile(outfitImage.uri as string),
         },
       };
     }
   }
 
-  async generateImage(): Promise<NImageService.TGeneratedResult[]> {
+  async generateImage(name: string): Promise<NImageService.TGeneratedResult[]> {
     if (!this.userImage || !this.outfitImage) {
       throw new Error(`Empty image selection`);
     }
@@ -91,8 +94,39 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
       promptsConfigs.map(config => this.instance.models.generateContent(config))
     );
 
+    const assetDirPath = getPictureDirPath();
+
+    const hasCreatedAssetDir = await fs.exists(assetDirPath);
+    let isCreatedAssetsDir = true;
+    if (!hasCreatedAssetDir) {
+      try {
+        await fs.mkdir(assetDirPath, {
+          NSURLIsExcludedFromBackupKey: true,
+        });
+        isCreatedAssetsDir = true;
+      } catch (error) {
+        console.log('Error: ', error);
+
+        isCreatedAssetsDir = false;
+      }
+    }
+
+    const tempFolderPath = `${assetDirPath}/tmp-${name}`;
+
+    if (isCreatedAssetsDir) {
+      try {
+        await fs.mkdir(tempFolderPath, {
+          NSURLIsExcludedFromBackupKey: true,
+        });
+        isCreatedAssetsDir = true;
+      } catch (error) {
+        console.log('Error: ', error);
+        isCreatedAssetsDir = false;
+      }
+    }
+
     const results: NImageService.TGeneratedResult[] = [];
-    let i = 0;
+    let id = 0;
 
     for (const requestResult of requestsResults) {
       if (requestResult.status === 'fulfilled') {
@@ -101,12 +135,6 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
             const type = part.text ? 'text' : 'image';
 
             if (type === 'text') {
-              results.push({
-                id: i++,
-                type,
-                data: part.text as string,
-              });
-
               continue;
             }
 
@@ -114,11 +142,48 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
             const data = part.inlineData!.data as string;
 
             results.push({
-              id: i++,
+              id: id++,
               type,
-              data: { content: data, mimeType },
+              data: { content: `data:${mimeType};base64,${data}`, mimeType },
             });
           }
+        }
+      }
+    }
+
+    if (isCreatedAssetsDir) {
+      const images = results.filter(image => image.type === 'image');
+
+      const fileCreationData = images.map(image => {
+        const fileExtension = getFileExtensionFromMimeType(image.data.mimeType);
+        const fileName = `outfit-try-on-${image.id}`;
+        const filepath = `${tempFolderPath}/${fileName}.${fileExtension}`;
+        const data = image.data.content.slice(
+          image.data.content.indexOf('base64,') + 'base64,'.length
+        );
+
+        return {
+          filepath,
+          data,
+          encoding: 'base64' as const,
+        };
+      });
+
+      const storeResults = await Promise.allSettled(
+        fileCreationData.map(fileData =>
+          fs.writeFile(fileData.filepath, fileData.data, fileData.encoding)
+        )
+      );
+
+      for (let i = 0; i < storeResults.length; i++) {
+        const result = storeResults[i];
+
+        if (result.status === 'fulfilled') {
+          const successImage = images[i];
+          const itemIndex = successImage.id;
+
+          (results[itemIndex] as TGeneratedImage).data.content =
+            'file://' + fileCreationData[i].filepath;
         }
       }
     }
