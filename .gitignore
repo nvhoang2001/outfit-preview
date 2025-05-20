@@ -79,3 +79,5 @@ yarn-error.log
 ios/tmp.xcconfig
 !.env.example
 !.env.release.android.example
+
+android/gradle.properties
