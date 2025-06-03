@@ -5,7 +5,7 @@ import OutfitPreview from '@/modules/OutfitPreview';
 import { getFileExtensionFromMimeType, getPictureDirPath } from '@/utils/assetsPathUtils';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View } from 'react-native';
-import { writeFile, exists, mkdir } from '@dr.pogodin/react-native-fs';
+import { writeFile, exists, mkdir, moveFile } from '@dr.pogodin/react-native-fs';
 import React, { useRef } from 'react';
 import { useLingui } from '@lingui/react/macro';
 import Toast from 'react-native-toast-message';
@@ -63,21 +63,35 @@ function OutfitPreviewPage({ navigation }: TProps) {
       const fileExtension = getFileExtensionFromMimeType(image.data.mimeType);
       const name = `outfit-try-on-${image.id}`;
       const filepath = `${assetDirPath}/${name}.${fileExtension}`;
-      const data = image.data.content.slice(
-        image.data.content.indexOf('base64,') + 'base64,'.length
-      );
+      const isBase64FilfeContent = image.data.content.startsWith('data');
+
+      if (isBase64FilfeContent) {
+        const data = image.data.content.slice(
+          image.data.content.indexOf('base64,') + 'base64,'.length
+        );
+
+        return {
+          filepath,
+          data,
+          encoding: 'base64' as const,
+          action: 'write',
+        };
+      }
 
       return {
-        filepath,
-        data,
-        encoding: 'base64' as const,
+        filepath: image.data.content.slice('file://'.length),
+        destFilePath: filepath,
+        action: 'move',
       };
     });
 
     const storeResults = await Promise.allSettled(
-      fileCreationData.map(fileData =>
-        writeFile(fileData.filepath, fileData.data, fileData.encoding)
-      )
+      fileCreationData.map(fileData => {
+        if (fileData.action === 'write') {
+          return writeFile(fileData.filepath, fileData.data!, fileData.encoding);
+        }
+        return moveFile(fileData.filepath, fileData.destFilePath!);
+      })
     );
 
     const errorImages = storeResults.reduce<number[]>((list, result, index) => {

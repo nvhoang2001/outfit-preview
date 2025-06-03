@@ -98,6 +98,7 @@ class GeminiImageGenerativeSerivce extends BaseImageGenerate {
 
     const hasCreatedAssetDir = await fs.exists(assetDirPath);
     let isCreatedAssetsDir = true;
+
     if (!hasCreatedAssetDir) {
       try {
         await fs.mkdir(assetDirPath, {

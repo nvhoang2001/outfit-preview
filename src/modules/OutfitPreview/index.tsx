@@ -29,7 +29,7 @@ import { ErrorWithCode } from '@/utils/ErrorWithCode';
 import { ERROR_CODE } from '@/constants/error-code';
 import Toast from 'react-native-toast-message';
 
-type TGeneratedImageResult = Exclude<NImageService.TGeneratedResult, { type: 'text' }>;
+type TGeneratedImageResult = NImageService.TGeneratedImageResult;
 type TImageId = TGeneratedImageResult['id'];
 
 type TExpandImageModal = {

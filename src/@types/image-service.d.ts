@@ -1,5 +1,6 @@
 export namespace NImageService {
   export type TGeneratedResult = TImageGenerateResponse;
+  export type TGeneratedImageResult = IGeneratedImageResult & { id: number };
 }
 
 interface IGeneratedTextResult {
